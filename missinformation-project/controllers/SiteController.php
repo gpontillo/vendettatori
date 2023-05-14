@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CalculateForm;
+use app\models\News;
 
 class SiteController extends Controller
 {
@@ -135,9 +136,12 @@ class SiteController extends Controller
     public function actionCalculate()
     {
         $model = new CalculateForm();
-        if ($model->load(Yii::$app->request->post()) && $model->verify(Yii::$app->params['url'])) {
-            
-            return $this->render('calculate-confirm', ['model' => $model]);
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            // ricerca su db dell'url
+             // se non c'è aggiungi notizia
+            $news = new News();
+            $news->indiceAttendibilita = 40;
+            return $this->render('calculate-confirm', ['model' => $news]);
         }
         return $this->render('calculate', [
             'model' => $model,

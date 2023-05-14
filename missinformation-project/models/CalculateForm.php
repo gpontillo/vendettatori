@@ -13,6 +13,7 @@ class CalculateForm extends Model
     {
         return [
             [['url'], 'required'],
+            ['url','url', 'defaultScheme' => 'http'],
         ];
     }
 
@@ -24,18 +25,5 @@ class CalculateForm extends Model
         return [
             'url' => 'News\'url to verify',
         ];
-    }
-
-    /**
-     * Sends an email to the specified email address using the information collected by this model.
-     * @param string $email the target email address
-     * @return bool whether the model passes validation
-     */
-    public function verify($url)
-    {
-        if ($this->validate()) {
-            return true;
-        }
-        return false;
     }
 }
