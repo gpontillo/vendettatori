@@ -1,5 +1,7 @@
 CREATE DATABASE IF NOT EXISTS misinformationProject;
 
+USE misinformationProject;
+
 CREATE TABLE IF NOT EXISTS notizia (
 
     id INT(10) PRIMARY KEY NOT NULL,
