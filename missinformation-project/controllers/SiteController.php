@@ -10,7 +10,8 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CalculateForm;
-use app\models\News;
+use app\models\Notizia;
+use yii\web\Request;
 
 class SiteController extends Controller
 {
@@ -138,10 +139,21 @@ class SiteController extends Controller
         $model = new CalculateForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // ricerca su db dell'url
+            
+            
+            $query = Notizia::find()->where(['link' => $model->url ])->all();
+                   
+            //if(!$query)
+            //{
+            //    return $this->render('insert-news');
+            //}
             // se non c'è aggiungi notizia
-            $news = new News();
-            $news->indiceAttendibilita = 40;
-            return $this->render('calculate-confirm', ['model' => $news]);
+            
+            $news = new Notizia(); //prima c'era News()
+            $news->indice_attendibilita = 40;
+            return $this->render('calculate-confirm', ['model' => $query[0],
+            'query' => $query 
+            ]);
         }
         return $this->render('calculate', [
             'model' => $model,

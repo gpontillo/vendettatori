@@ -2,17 +2,30 @@
 use yii\helpers\Html;
 
 ?>
+
+
+
 <div class="site-index">
+
+    <h1>Notizie</h1>
+    <ul>
+    <?php foreach ($query as $news): ?>
+        <li>
+            <?= Html::encode("{$news->id} ({$news->descrizione_notizia})") ?>:
+            <?= $news->link ?>
+        </li>
+    <?php endforeach; ?>
+    </ul>
 
     <div class="jumbotron text-center bg-transparent">
         <?php
-            if($model->indiceAttendibilita >= 50) {
+            if($model->indice_attendibilita  >= 50) {
                 echo '<h1 class="display-4">The article is affidable!</h1>';
-                echo '<p class="lead">You can trust this article because it has an affidability index of ',$model->indiceAttendibilita,'</p>';
+                echo '<p class="lead">You can trust this article because it has an affidability index of ',$model->indice_attendibilita,'</p>';
             }
             else {
                 echo '<h1 class="display-4">The article is NOT affidable!</h1>';
-                echo '<p class="lead">This article is not affidable because it has an affidability index of ',$model->indiceAttendibilita,'</p>';
+                echo '<p class="lead">This article is not affidable because it has an affidability index of ',$model->indice_attendibilita,'</p>';
             }
         ?>
     </div>
@@ -44,7 +57,7 @@ use yii\helpers\Html;
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                    if($model->indiceAttendibilita < 50) {
+                    if($model->indice_attendibilita < 50) {
                         echo '<h2>This article is more affidable</h2>';
                         echo '<p class="lead">You can trust this article because it has an affidability index of 80 </p>';
                         echo '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
