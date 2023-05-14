@@ -2,6 +2,11 @@ CREATE DATABASE IF NOT EXISTS missinformationProject;
 
 USE missinformationProject;
 
+CREATE TABLE IF NOT EXISTS categoria(
+    id_categoria INT(10) PRIMARY KEY NOT NULL,
+    descrizione_categoria CHAR(255)
+);
+
 CREATE TABLE IF NOT EXISTS notizia (
 
     id INT(10) PRIMARY KEY NOT NULL,
@@ -15,10 +20,6 @@ CREATE TABLE IF NOT EXISTS notizia (
     FOREIGN KEY(categoria) REFERENCES categoria(categoria)
 );
 
-CREATE TABLE IF NOT EXISTS categoria(
-    id_categoria INT(10) PRIMARY KEY NOT NULL,
-    descrizione_categoria CHAR(255)
-);
 
 
 
