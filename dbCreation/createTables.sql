@@ -16,7 +16,7 @@ CREATE TABLE IF NOT EXISTS notizia (
 );
 
 CREATE TABLE IF NOT EXISTS categoria(
-    id_categoria INT(1O) PRIMARY KEY NOT NULL,
+    id_categoria INT(10) PRIMARY KEY NOT NULL,
     descrizione_categoria CHAR(255)
 );
 
