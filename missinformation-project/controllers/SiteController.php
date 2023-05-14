@@ -138,7 +138,7 @@ class SiteController extends Controller
         $model = new CalculateForm();
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // ricerca su db dell'url
-             // se non c'è aggiungi notizia
+            // se non c'è aggiungi notizia
             $news = new News();
             $news->indiceAttendibilita = 40;
             return $this->render('calculate-confirm', ['model' => $news]);

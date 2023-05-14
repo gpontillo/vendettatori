@@ -1,13 +1,6 @@
-IF NOT EXISTS CREATE DATABASE misinformationProject;
+CREATE DATABASE IF NOT EXISTS misinformationProject;
 
-IF NOT EXISTS CREATE TABLE utente (
-
-    id INT(10) PRIMARY KEY NOT NULL,
-    nomeUtente CHAR(25) NOT NULL,
-    email CHAR(25) NOT NULL,
-);
-
-IF NOT EXISTS CREATE TABLE notizia (
+CREATE TABLE IF NOT EXISTS notizia (
 
     id INT(10) PRIMARY KEY NOT NULL,
     link CHAR(255) NOT NULL,
@@ -20,7 +13,7 @@ IF NOT EXISTS CREATE TABLE notizia (
     FOREIGN KEY(categoria) REFERENCES categoria(categoria)
 );
 
-IF NOT EXISTS CREATE TABLE categoria(
+CREATE TABLE IF NOT EXISTS categoria(
     id_categoria INT(1O) PRIMARY KEY NOT NULL,
     descrizione_categoria CHAR(255)
 );
