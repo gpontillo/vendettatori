@@ -1,6 +1,6 @@
-CREATE DATABASE IF NOT EXISTS misinformationProject;
+CREATE DATABASE IF NOT EXISTS missinformationProject;
 
-USE misinformationProject;
+USE missinformationProject;
 
 CREATE TABLE IF NOT EXISTS notizia (
 
