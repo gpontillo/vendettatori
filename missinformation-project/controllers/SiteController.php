@@ -9,6 +9,7 @@ use yii\web\Response;
 use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
+use app\models\CalculateForm;
 
 class SiteController extends Controller
 {
@@ -124,5 +125,22 @@ class SiteController extends Controller
     public function actionAbout()
     {
         return $this->render('about');
+    }
+
+    /**
+     * Displays calculate page.
+     *
+     * @return Response|string
+     */
+    public function actionCalculate()
+    {
+        $model = new CalculateForm();
+        if ($model->load(Yii::$app->request->post()) && $model->verify(Yii::$app->params['url'])) {
+            
+            return $this->render('calculate-confirm', ['model' => $model]);
+        }
+        return $this->render('calculate', [
+            'model' => $model,
+        ]);
     }
 }
