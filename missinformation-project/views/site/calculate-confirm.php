@@ -9,10 +9,16 @@ use yii\helpers\Html;
 
     <h1>Notizie</h1>
     <ul>
+    <?php $soggetti; $dataPubblicazione; $dataAccaduto?>
     <?php foreach ($query as $news): ?>
         <li>
-            <?= Html::encode("{$news->id} ({$news->descrizione_notizia})") ?>:
-            <?= $news->link ?>
+            <?php
+            $soggetti = $news->coinvolgimento;
+            $dataPubblicazione = $news->data_pubblicazione;
+            $dataAccaduto = $news->data_accaduto;
+            ?>
+            <?= $news->link;?>
+            <?= $news->descrizione_notizia;?>
         </li>
     <?php endforeach; ?>
     </ul>
@@ -40,17 +46,14 @@ use yii\helpers\Html;
             <div class="col-lg-6">
                 <h3>Subjects of the article</h3>
                 <ul>
-                    <li>Rob</li>
-                    <li>George</li>
-                    <li>Kyle</li>
-                    <li>Hannah</li>
+                    <li><?= $soggetti;?></li>
                 </ul>
             </div>
             <div class="col-lg-6">
                 <h3>Other infos</h3>
                 <ul>
-                    <li>Publishing date: 01/01/1997</li>
-                    <li>Event date: 01/01/1997</li>
+                    <li>Publishing date: <?=$dataPubblicazione;?></li>
+                    <li>Event date: <?=$dataAccaduto?></li>
                 </ul>
             </div>
         </div>
@@ -59,11 +62,12 @@ use yii\helpers\Html;
                 <?php
                     if($model->indice_attendibilita < 50) {
                         echo '<h2>This article is more affidable</h2>';
+                        foreach ($secondQuery as $news2):
+                           echo $news2->link;
+                           echo " ";
+                           echo $news2->descrizione_notizia;
+                        endforeach;
                         echo '<p class="lead">You can trust this article because it has an affidability index of 80 </p>';
-                        echo '<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et
-                        dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip
-                        ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu
-                        fugiat nulla pariatur.</p>';
                     }
                 ?>
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Check similar articles</a></p>

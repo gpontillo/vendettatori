@@ -142,6 +142,7 @@ class SiteController extends Controller
             
             
             $query = Notizia::find()->where(['link' => $model->url ])->all();
+            $query2 = Notizia::find()->andFilterCompare('indice_attendibilita', '>50')->all();
                    
             //if(!$query)
             //{
@@ -150,9 +151,9 @@ class SiteController extends Controller
             // se non c'è aggiungi notizia
             
             $news = new Notizia(); //prima c'era News()
-            $news->indice_attendibilita = 40;
             return $this->render('calculate-confirm', ['model' => $query[0],
-            'query' => $query 
+            'query' => $query,
+            'secondQuery' => $query2
             ]);
         }
         return $this->render('calculate', [
