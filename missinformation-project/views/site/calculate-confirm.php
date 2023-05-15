@@ -1,37 +1,21 @@
 <?php
 use yii\helpers\Html;
-
+$indice_attendibilita = $news->indice_attendibilita;
+$soggetti = $news->coinvolgimento;
+$dataPubblicazione = $news->data_pubblicazione;
+$dataAccaduto = $news->data_accaduto;
 ?>
-
-
-
 <div class="site-index">
-
     <h1>Notizie</h1>
-    <ul>
-    <?php $soggetti; $dataPubblicazione; $dataAccaduto?>
-    <?php foreach ($query as $news): ?>
-        <li>
-            <?php
-            $soggetti = $news->coinvolgimento;
-            $dataPubblicazione = $news->data_pubblicazione;
-            $dataAccaduto = $news->data_accaduto;
-            ?>
-            <?= $news->link;?>
-            <?= $news->descrizione_notizia;?>
-        </li>
-    <?php endforeach; ?>
-    </ul>
-
     <div class="jumbotron text-center bg-transparent">
         <?php
-            if($model->indice_attendibilita  >= 50) {
+            if($indice_attendibilita  >= 50) {
                 echo '<h1 class="display-4">The article is affidable!</h1>';
-                echo '<p class="lead">You can trust this article because it has an affidability index of ',$model->indice_attendibilita,'</p>';
+                echo '<p class="lead">You can trust this article because it has an affidability index of ',$indice_attendibilita,'</p>';
             }
             else {
                 echo '<h1 class="display-4">The article is NOT affidable!</h1>';
-                echo '<p class="lead">This article is not affidable because it has an affidability index of ',$model->indice_attendibilita,'</p>';
+                echo '<p class="lead">This article is not affidable because it has an affidability index of ',$indice_attendibilita,'</p>';
             }
         ?>
     </div>
@@ -46,28 +30,32 @@ use yii\helpers\Html;
             <div class="col-lg-6">
                 <h3>Subjects of the article</h3>
                 <ul>
-                    <li><?= $soggetti;?></li>
+                    <li><?= $soggetti?></li>
                 </ul>
             </div>
             <div class="col-lg-6">
                 <h3>Other infos</h3>
                 <ul>
-                    <li>Publishing date: <?=$dataPubblicazione;?></li>
-                    <li>Event date: <?=$dataAccaduto?></li>
+                    <li>Publishing date: <?= $dataPubblicazione ?></li>
+                    <li>Event date: <?= $dataAccaduto?></li>
                 </ul>
             </div>
         </div>
         <div class="row">
             <div class="col-lg-12">
                 <?php
-                    if($model->indice_attendibilita < 50) {
+                    if($indice_attendibilita < 50) {
+                        if($news2 != null) {
                         echo '<h2>This article is more affidable</h2>';
-                        foreach ($secondQuery as $news2):
-                           echo $news2->link;
-                           echo " ";
-                           echo $news2->descrizione_notizia;
-                        endforeach;
-                        echo '<p class="lead">You can trust this article because it has an affidability index of 80 </p>';
+                        echo $news2->link;
+                        echo " ";
+                        echo $news2->descrizione_notizia;
+                        echo '<p class="lead">You can trust this article because it has an affidability index of ',$news2->indice_attendibilita,' </p>';
+                        }
+                        else {
+                            echo '<h2>We don\'t have more affidable articles for the same argument</h2>';
+                            echo '<p class="lead">For this argument, we don\'t have more affidable news</p>';
+                        }
                     }
                 ?>
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Check similar articles</a></p>

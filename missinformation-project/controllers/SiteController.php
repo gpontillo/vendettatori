@@ -141,8 +141,8 @@ class SiteController extends Controller
             // ricerca su db dell'url
             
             
-            $query = Notizia::find()->where(['link' => $model->url ])->all();
-            $query2 = Notizia::find()->andFilterCompare('indice_attendibilita', '>50')->all();
+            $query = Notizia::find()->where(['link' => $model->url ])->one();
+            $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
                    
             //if(!$query)
             //{
@@ -151,9 +151,9 @@ class SiteController extends Controller
             // se non c'è aggiungi notizia
             
             $news = new Notizia(); //prima c'era News()
-            return $this->render('calculate-confirm', ['model' => $query[0],
-            'query' => $query,
-            'secondQuery' => $query2
+            return $this->render('calculate-confirm', [
+                'news' => $query,
+                'news2' => $query2,
             ]);
         }
         return $this->render('calculate', [
