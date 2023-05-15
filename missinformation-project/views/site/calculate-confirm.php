@@ -59,17 +59,22 @@ use yii\helpers\Html;
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <ul>
                 <?php
                     if($model->indice_attendibilita < 50) {
-                        echo '<h2>This article is more affidable</h2>';
+                        
+                        echo '<h2>These articles are more reliable</h2>';
                         foreach ($secondQuery as $news2):
+                           echo"<li>";
                            echo $news2->link;
                            echo " ";
                            echo $news2->descrizione_notizia;
+                           echo"</li>";
                         endforeach;
-                        echo '<p class="lead">You can trust this article because it has an affidability index of 80 </p>';
+                        echo '<p class="lead">You can trust these article because they have an affidability index superior than 50 </p>';
                     }
                 ?>
+                </ul>
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Check similar articles</a></p>
             </div>
         </div>
