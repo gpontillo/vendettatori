@@ -43,6 +43,7 @@ $dataAccaduto = $news->data_accaduto;
         </div>
         <div class="row">
             <div class="col-lg-12">
+                <ul>
                 <?php
                     if($indice_attendibilita < 50) {
                         if($news2 != null) {
@@ -58,6 +59,7 @@ $dataAccaduto = $news->data_accaduto;
                         }
                     }
                 ?>
+                </ul>
                 <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Check similar articles</a></p>
             </div>
         </div>
