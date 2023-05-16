@@ -140,7 +140,6 @@ class SiteController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // ricerca su db dell'url
             
-            
             $query = Notizia::find()->where(['link' => $model->url ])->one();
             $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
                    
@@ -160,4 +159,15 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    /**
+     * Displays similar articles page.
+     *
+     * @return string
+     */
+    public function actionSimilarArticles()
+    {
+        return $this->render('similar-articles');
+    }
+
 }

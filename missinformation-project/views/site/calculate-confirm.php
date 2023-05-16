@@ -60,7 +60,7 @@ $dataAccaduto = $news->data_accaduto;
                     }
                 ?>
                 </ul>
-                <p><a class="btn btn-outline-secondary" href="http://www.yiiframework.com/doc/">Check similar articles</a></p>
+                <p><?= Html::a('Check similar articles', ['/site/similar-articles'], ['argument' => $news->tipo_categoria, 'class'=>'btn btn-outline-secondary']) ?></p>
             </div>
         </div>
 
