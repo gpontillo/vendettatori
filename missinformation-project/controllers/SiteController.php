@@ -141,15 +141,24 @@ class SiteController extends Controller
             // ricerca su db dell'url
             
             $query = Notizia::find()->where(['link' => $model->url ])->one();
-            $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
                    
-            //if(!$query)
-            //{
-            //    return $this->render('insert-news');
-            //}
-            // se non c'è aggiungi notizia
-            
-            $news = new Notizia(); //prima c'era News()
+            if(!$query)
+            {
+                //TO-DO: form per aggiungere la notizia
+                $query = new Notizia();
+                $query->id = Notizia::find()->max('id') + 1;
+                $query->tipo_categoria = 1;
+                $query->link = $model->url;
+                $query->descrizione_notizia = "Mock test";
+                $query->indice_attendibilita = rand(1, 100);
+                $query->data_pubblicazione = "1997-01-01" ;
+                $query->data_accaduto = "1997-01-01" ;
+                $query->coinvolgimento = "tizio caio" ;
+                $query->save();
+            }
+
+            $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
+
             return $this->render('calculate-confirm', [
                 'news' => $query,
                 'news2' => $query2,
