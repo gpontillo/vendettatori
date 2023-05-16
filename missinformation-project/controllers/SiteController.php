@@ -165,9 +165,10 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionSimilarArticles()
+    public function actionSimilarArticles($argument)
     {
-        return $this->render('similar-articles');
+        $list_news = Notizia::find()->where(['tipo_categoria' => $argument])->orderBy(['indice_attendibilita' => SORT_ASC])->all();
+        return $this->render('similar-articles', ['list_news' => $list_news]);
     }
 
 }
