@@ -41,7 +41,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Search News', 'url' => ['/site/calculate']],
-            ['label' => 'View all the News', 'url' => ['/site/contact']],
+            ['label' => 'Report a News', 'url' => ['/site/contact']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Moderator Area', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

@@ -37,7 +37,7 @@ class Notizia extends \yii\db\ActiveRecord
             [['id', 'link', 'descrizione_notizia', 'indice_attendibilita', 'data_pubblicazione'], 'required'],
             [['id', 'tipo_categoria', 'indice_attendibilita'], 'integer'],
             [['data_pubblicazione', 'data_accaduto'], 'safe'],
-            [['link', 'descrizione_notizia', 'coinvolgimento'], 'string', 'max' => 255],
+            [['link', 'descrizione_notizia', 'coinvolgimento'], 'string', 'max' => 2600],
             [['id'], 'unique'],
             [['tipo_categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['tipo_categoria' => 'id_categoria']],
         ];
