@@ -15,3 +15,15 @@ use yii\model\Notizia;
     </div>
     <?php ActiveForm::end(); ?>
 </div>
+
+<div class="site-contact">
+    <?php $form = ActiveForm::begin(); ?>
+    <div class="mb-3">
+        <?= $form->field($model, 'secondUrl') ?>
+    </div>
+    <div class="mb-3">
+        <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+    </div>
+    <?php ActiveForm::end(); ?>
+</div>
+

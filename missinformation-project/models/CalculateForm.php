@@ -8,13 +8,14 @@ use yii\base\Model;
 class CalculateForm extends Model
 {
     public $url;
-    public $category;
+    public $secondUrl;
 
     public function rules()
     {
         return [
             [['url'], 'required'],
             ['url','url', 'defaultScheme' => 'http'],
+            [['secondUrl'], 'required']
         ];
     }
 
@@ -24,8 +25,8 @@ class CalculateForm extends Model
     public function attributeLabels()
     {
         return [
-            'url' => 'News\'url to verify',
-            'category' => 'Select a category to search'
+            'url' => 'News url to verify',
+            'secondUrl' => 'Resource url to verify'
         ];
     }
 }
