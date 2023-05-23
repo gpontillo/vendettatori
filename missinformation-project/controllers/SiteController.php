@@ -10,6 +10,7 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CalculateForm;
+use app\models\CalculateSourceForm;
 use app\models\Notizia;
 use app\models\Fonte;
 use yii\web\Request;
@@ -138,6 +139,7 @@ class SiteController extends Controller
     public function actionCalculate()
     {
         $model = new CalculateForm();
+
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
             // ricerca su db dell'url
             
@@ -157,7 +159,8 @@ class SiteController extends Controller
                 $query->coinvolgimento = "tizio caio" ;
                 $query->save();
             }
-            
+
+
             $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
 
             return $this->render('calculate-confirm', [
@@ -172,12 +175,24 @@ class SiteController extends Controller
 
     public function actionCalculateSource()
     {
-        $mode = new CalculateSourceForm();
+        $modelSource= new CalculateSourceForm();
 
-        if($model->load(Yii::$app->request->post()) && $model->validate())
+        if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) 
         {
-            
+            $query = Fonte::find()->where(['descrizione_fonte' => $modelSource->source])->one();
+            $query2 = Fonte::find()->Where('>', 'indice_fonte', 50)->one();
+
+            return $this->render('calculate-confirm-source', [
+                'font' => $query,
+                'font2' => $query2
+            ]);
+
         }
+
+        return $this->render('calculate-source', [
+            'model' => $modelSource,
+        ]);
+
     }
 
     /**

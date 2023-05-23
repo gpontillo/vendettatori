@@ -13,7 +13,6 @@ class CalculateSourceForm extends Model
     {
         return [
             [['source'], 'required'],
-            ['source','source', 'defaultScheme' => 'http'],
         ];
     }
 
@@ -23,7 +22,7 @@ class CalculateSourceForm extends Model
     public function attributeLabels()
     {
         return [
-            'source' => 'News url to verify'
+            'source' => 'Source name to verify'
         ];
     }
 }
