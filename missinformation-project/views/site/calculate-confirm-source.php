@@ -39,6 +39,6 @@ $descrizione_notizia = $font->descrizione_fonte;
                 </ul>
             </div>
         </div>
-
+        <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary']) ?>
     </div>
 </div>

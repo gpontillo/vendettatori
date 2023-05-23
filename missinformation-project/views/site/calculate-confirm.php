@@ -8,10 +8,22 @@ $dataPubblicazione = $news->data_pubblicazione;
 $dataAccaduto = $news->data_accaduto;
 ?>
 <div class="site-index">
+    <?php
+    //da controllare il cockie
+    if (true)
+        echo '
+                <div class="alert alert-warning d-flex align-items-center" role="alert">
+                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
+                    <div>
+                        La fonte di questa notizia è stata bloccata. <a href="https://www.w3schools.com">Clicca qui per sbloccarla</a>
+                    </div>
+                </div>
+            ';
+    ?>
     <h1>Notizie</h1>
     <div class="jumbotron text-center bg-transparent">
         <?php
-        if ($indice_attendibilita  >= 50) {
+        if ($indice_attendibilita >= 50) {
             echo '<h1 class="display-4">The article is affidable!</h1>';
             echo '<p class="lead">You can trust this article because it has an affidability index of ', $indice_attendibilita, '</p>';
         } else {
@@ -31,14 +43,20 @@ $dataAccaduto = $news->data_accaduto;
             <div class="col-lg-6">
                 <h3>Subjects of the article</h3>
                 <ul>
-                    <li><?= $soggetti ?></li>
+                    <li>
+                        <?= $soggetti ?>
+                    </li>
                 </ul>
             </div>
             <div class="col-lg-6">
                 <h3>Other infos</h3>
                 <ul>
-                    <li>Publishing date: <?= $dataPubblicazione ?></li>
-                    <li>Event date: <?= $dataAccaduto ?></li>
+                    <li>Publishing date:
+                        <?= $dataPubblicazione ?>
+                    </li>
+                    <li>Event date:
+                        <?= $dataAccaduto ?>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -60,9 +78,9 @@ $dataAccaduto = $news->data_accaduto;
                     }
                     ?>
                 </ul>
-                <p><?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => $news->tipo_categoria], ['class' => 'btn btn-outline-secondary']) ?></p>
+                <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => $news->tipo_categoria], ['class' => 'btn btn-outline-secondary']) ?>
+                <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary']) ?>
             </div>
         </div>
-
     </div>
 </div>
