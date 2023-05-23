@@ -24,7 +24,7 @@ INSERT INTO notizia(id, link, descrizione_notizia, tipo_categoria, indice_attend
               2,
               70,
               '2023-05-15',
-              '2023-05-14'
+              '2023-05-14',
               'Autogol');
 
 INSERT INTO notizia(id, link, descrizione_notizia, tipo_categoria, indice_attendibilita, data_pubblicazione, data_accaduto, coinvolgimento)
