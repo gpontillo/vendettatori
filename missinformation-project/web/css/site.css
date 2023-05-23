@@ -1,4 +1,4 @@
-main > .container {
+main>.container {
     padding: 70px 15px 20px;
 }
 
@@ -8,7 +8,7 @@ main > .container {
     height: 60px;
 }
 
-.footer > .container {
+.footer>.container {
     padding-right: 15px;
     padding-left: 15px;
 }
@@ -19,7 +19,8 @@ main > .container {
 }
 
 /* add sorting icons to gridview sort links */
-a.asc:after, a.desc:after {
+a.asc:after,
+a.desc:after {
     content: '';
     left: 3px;
     display: inline-block;
@@ -59,26 +60,84 @@ a.desc:after {
 }
 
 /* align the logout "link" (button in form) of the navbar */
-.nav li > form > button.logout {
+.nav li>form>button.logout {
     padding-top: 7px;
     color: rgba(255, 255, 255, 0.5);
 }
 
 @media(max-width:767px) {
-    .nav li > form > button.logout {
-        display:block;
+    .nav li>form>button.logout {
+        display: block;
         text-align: left;
         width: 100%;
         padding: 10px 0;
     }
 }
 
-.nav > li > form > button.logout:focus,
-.nav > li > form > button.logout:hover {
+.nav>li>form>button.logout:focus,
+.nav>li>form>button.logout:hover {
     text-decoration: none;
     color: rgba(255, 255, 255, 0.75);
 }
 
-.nav > li > form > button.logout:focus {
+.nav>li>form>button.logout:focus {
     outline: none;
+}
+
+.title-card {
+    position: relative;
+}
+
+.title-card-inside {
+    position: relative;
+    margin-bottom: 8rem;
+}
+
+.margin-rows-index {
+    margin-bottom: 5rem;
+}
+
+.title-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url(newspaper1.png);
+    background-repeat: no-repeat;
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    -webkit-filter: saturate(50%) opacity(50%);
+    filter: saturate(50%) opacity(50%);
+}
+
+.bypass-container {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+}
+
+.image-card {
+    height: 60vh;
+    width: 100%;
+    border-radius: 10px;
+    box-shadow: 5px 5px 5px lightgrey;
+}
+
+.alternate-shadow {
+    box-shadow: -5px 5px 5px lightgrey;
+}
+
+.card-index-page {
+    border-radius: 10px;
+}
+
+.mb-20 {
+    margin-bottom: 20px !important;
 }
