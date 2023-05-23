@@ -1,7 +1,7 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap5\ActiveForm;
 use yii\model\Categoria;
 use yii\model\Notizia;
 use yii\model\Fonte;
@@ -20,12 +20,21 @@ use yii\model\Fonte;
     <div class="row">
         <div class="col">
             <h4>Search by URL</h4>
-            <?php $form = ActiveForm::begin(); ?>
-            <div class="mb-3">
-                <?= $form->field($model, 'url') ?>
-            </div>
-            <div class="mb-3">
-                <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+            <?php $form = ActiveForm::begin([
+                'id' => 'report-new-article-form',
+                'layout' => 'horizontal',
+                'fieldConfig' => [
+                    'template' => "{label}\n{input}\n{error}",
+                    'labelOptions' => ['class' => 'col-lg-4 col-form-label mr-lg-3'],
+                    'inputOptions' => ['class' => 'col-lg-3 form-control'],
+                    'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
+                ],
+            ]); ?>
+            <?= $form->field($model, 'url') ?>
+            <div class="form-group">
+                <div class="col-lg-11 mt-2">
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+                </div>
             </div>
             <?php ActiveForm::end(); ?>
         </div>

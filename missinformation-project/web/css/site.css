@@ -84,6 +84,10 @@ a.desc:after {
     outline: none;
 }
 
+.navbar-color {
+    background-color: rgb(33, 37, 41);
+}
+
 .title-card {
     position: relative;
 }
