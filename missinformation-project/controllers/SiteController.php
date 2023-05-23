@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CalculateForm;
 use app\models\Notizia;
+use app\models\Fonte;
 use yii\web\Request;
 
 class SiteController extends Controller
@@ -141,7 +142,7 @@ class SiteController extends Controller
             // ricerca su db dell'url
             
             $query = Notizia::find()->where(['link' => $model->url ])->one();
-                   
+           
             if(!$query)
             {
                 //TO-DO: form per aggiungere la notizia
