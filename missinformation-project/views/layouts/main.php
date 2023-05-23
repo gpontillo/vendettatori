@@ -23,7 +23,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Missinformation Fight System</title>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -34,13 +34,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
     NavBar::begin([
         'brandLabel' => 'Missinformation Fight System',
         'brandUrl' => Yii::$app->homeUrl,
-        'options' => ['class' => 'navbar-expand-md navbar-dark bg-primary fixed-top']
+        'options' => ['class' => 'navbar-expand-md navbar-dark navbar-color fixed-top']
     ]);
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Search News', 'url' => ['/site/calculate']],
+            ['label' => 'Search Sources', 'url' => ['/site/calculate-source']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Moderator Area', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

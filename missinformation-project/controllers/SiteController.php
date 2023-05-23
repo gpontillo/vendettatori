@@ -10,9 +10,11 @@ use yii\filters\VerbFilter;
 use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CalculateForm;
+use app\models\ReportNewArticle;
 use app\models\CalculateSourceForm;
 use app\models\Notizia;
 use app\models\Fonte;
+use app\models\Segnalazioni;
 use yii\web\Request;
 
 class SiteController extends Controller
@@ -147,40 +149,30 @@ class SiteController extends Controller
 
             if(!$query)
             {
-                //TO-DO: form per aggiungere la notizia
-                $query = new Notizia();
-                $query->id = Notizia::find()->max('id') + 1;
-                $query->tipo_categoria = 1;
-                $query->link = $model->url;
-                $query->descrizione_notizia = "Mock test";
-                $query->indice_attendibilita = rand(1, 100);
-                $query->data_pubblicazione = "1997-01-01" ;
-                $query->data_accaduto = "1997-01-01" ;
-                $query->coinvolgimento = "tizio caio" ;
-                $query->save();
+                $this->redirect(['report-new-article', 'url' => $model->url]);
             }
-
-
-            $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
-
-            return $this->render('calculate-confirm', [
-                'news' => $query,
-                'news2' => $query2,
-            ]);
+            else {
+                $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
+                return $this->render('calculate-confirm', [
+                    'news' => $query,
+                    'news2' => $query2,
+                ]);
+            }
         }
-        return $this->render('calculate', [
-            'model' => $model,
-        ]);
+        else
+            return $this->render('calculate', [
+                'model' => $model,
+            ]);
     }
 
     public function actionCalculateSource()
     {
-        $modelSource= new CalculateSourceForm();
+        $modelSource = new CalculateSourceForm();
 
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) 
         {
             $query = Fonte::find()->where(['descrizione_fonte' => $modelSource->source])->one();
-            $query2 = Fonte::find()->Where('>', 'indice_fonte', 50)->one();
+            $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
 
             return $this->render('calculate-confirm-source', [
                 'font' => $query,
@@ -206,4 +198,35 @@ class SiteController extends Controller
         return $this->render('similar-articles', ['list_news' => $list_news]);
     }
 
+    /**
+     * Displays report new article page.
+     *
+     * @return Response|string
+     */
+    public function actionReportNewArticle()
+    {
+        $model = new ReportNewArticle();
+        $model->url = Yii::$app->request->get('url');
+
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $segnalazione = new Segnalazioni();
+            $id = Segnalazioni::find()->max('id');
+            if($id == null)
+                $id = 1;
+            $segnalazione->id = $id;
+            $segnalazione->url = $model->url;
+            $segnalazione->motivo = $model->motive;
+            $segnalazione->valutazione = $model->review;
+            $segnalazione->save();
+            
+            return $this->redirect([
+                'calculate',
+                'success' => true
+            ]);
+        }
+        return $this->render('report-new-article', [
+            'model' => $model,
+        ]);
+    }
 }
