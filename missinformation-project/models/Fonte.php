@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Notizia;
+
 
 /**
  * This is the model class for table "fonte".
@@ -57,5 +59,26 @@ class Fonte extends \yii\db\ActiveRecord
     public function getNotizias()
     {
         return $this->hasMany(Notizia::class, ['fonte' => 'id_fonte']);
+    }
+
+    public function FonteCalcolata()
+    {
+        $rows = (new \yii\db\Query())
+            ->select(['indice_affidabilita'])
+            ->from('notizia', 'fonte')
+            ->where(['fonte' => 'id_fonte'])
+            ->all();
+        
+        $sum = 0;
+        $i = 0;
+
+        foreach($rows as $row):
+            $sum += $row;
+            $i++;
+        endforeach;
+
+        $media = $sum / $i;
+
+        return $media;
     }
 }
