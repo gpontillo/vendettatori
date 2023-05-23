@@ -7,6 +7,15 @@ use yii\model\Notizia;
 use yii\model\Fonte;
 ?>
 <div class="site-contact">
+    <?php
+    if (Yii::$app->request->get('success') != null) {
+        echo '
+            <div class="alert alert-success" role="alert">
+                Report sent with success!
+            </div>
+          ';
+    };
+    ?>
     <div class="row">
         <div class="col">
             <h2>Search news</h2>

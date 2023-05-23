@@ -148,7 +148,7 @@ class SiteController extends Controller
 
             if(!$query)
             {
-                $this->redirect(['report-new-article']);
+                $this->redirect(['report-new-article', 'url' => $model->url]);
             }
             else {
                 $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
@@ -205,13 +205,12 @@ class SiteController extends Controller
     public function actionReportNewArticle()
     {
         $model = new ReportNewArticle();
+        $model->url = Yii::$app->request->get('url');
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
             return $this->redirect([
                 'calculate',
-                [
-                    'success' => true
-                ]
+                'success' => true
             ]);
         }
         return $this->render('report-new-article', [
