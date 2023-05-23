@@ -167,7 +167,7 @@ class SiteController extends Controller
 
     public function actionCalculateSource()
     {
-        $modelSource= new CalculateSourceForm();
+        $modelSource = new CalculateSourceForm();
 
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) 
         {

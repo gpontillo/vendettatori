@@ -2,8 +2,18 @@
 
 use yii\helpers\Html;
 
-$indice_attendibilita = $font->indice_fonte;
 ?>
+
+<?php if(($font == null) || ($font2 == null)): ?>
+
+    <div class="jumbotron text-center bg-transparent">
+        <?php
+            echo '<h1 class="display-4">The source does not exist!</h1>';
+            echo '<p class="lead">There is no source to trust if it does not exist </p>';
+        ?>
+    </div>
+<?php else:?> 
+<?php $indice_attendibilita = $font->indice_fonte; ?>
 <div class="site-index">
     <h1>Infos:</h1>
     <div class="jumbotron text-center bg-transparent">
@@ -56,3 +66,4 @@ $indice_attendibilita = $font->indice_fonte;
 
     </div>
 </div>
+<?php endif;?>
