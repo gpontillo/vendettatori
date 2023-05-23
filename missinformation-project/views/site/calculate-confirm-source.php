@@ -30,17 +30,17 @@ $indice_attendibilita = $font->indice_fonte;
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">#</th>
-                                    <th scope="col">Nome Fonte</th>
-                                    <th scope="col">Indice attendiblità Fonte</th>
+                                    <th scope="col">Source Name</th>
+                                    <th scope="col">Reliability Index</th>
+                                    <th scope="col">Source Link</th>
                                 </tr>
                             </thead>
                             <tbody>
                             <?php foreach($font2 as $ft2):?>
                                 <tr>
-                                    <th scope="row"><?= $i++;?></th>
                                     <td><?=$ft2->descrizione_fonte ?></td>
                                     <td><?=$ft2->indice_fonte ?></td>
+                                    <td><?= Html::a(Html::encode($ft2->link_fonte), $ft2->link_fonte, ['target'=>'_blank'])?></td>
                                 </tr>
                             </tbody>
                             <?php endforeach; ?>
