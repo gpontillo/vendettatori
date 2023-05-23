@@ -5,15 +5,15 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
-class CalculateForm extends Model
+class CalculateSourceForm extends Model
 {
-    public $url;
+    public $source;
 
     public function rules()
     {
         return [
-            [['url'], 'required'],
-            ['url','url', 'defaultScheme' => 'http'],
+            [['source'], 'required'],
+            ['source','source', 'defaultScheme' => 'http'],
         ];
     }
 
@@ -23,7 +23,7 @@ class CalculateForm extends Model
     public function attributeLabels()
     {
         return [
-            'url' => 'News url to verify'
+            'source' => 'News url to verify'
         ];
     }
 }

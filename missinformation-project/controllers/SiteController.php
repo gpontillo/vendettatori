@@ -11,6 +11,7 @@ use app\models\LoginForm;
 use app\models\ContactForm;
 use app\models\CalculateForm;
 use app\models\Notizia;
+use app\models\Fonte;
 use yii\web\Request;
 
 class SiteController extends Controller
@@ -141,7 +142,7 @@ class SiteController extends Controller
             // ricerca su db dell'url
             
             $query = Notizia::find()->where(['link' => $model->url ])->one();
-                   
+
             if(!$query)
             {
                 //TO-DO: form per aggiungere la notizia
@@ -156,7 +157,7 @@ class SiteController extends Controller
                 $query->coinvolgimento = "tizio caio" ;
                 $query->save();
             }
-
+            
             $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
 
             return $this->render('calculate-confirm', [
@@ -167,6 +168,16 @@ class SiteController extends Controller
         return $this->render('calculate', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCalculateSource()
+    {
+        $mode = new CalculateSourceForm();
+
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            
+        }
     }
 
     /**
