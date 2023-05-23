@@ -23,7 +23,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 <!DOCTYPE html>
 <html lang="<?= Yii::$app->language ?>" class="h-100">
 <head>
-    <title><?= Html::encode($this->title) ?></title>
+    <title>Missinformation Fight System</title>
     <?php $this->head() ?>
 </head>
 <body class="d-flex flex-column h-100">
@@ -41,6 +41,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Search News', 'url' => ['/site/calculate']],
+            ['label' => 'Search Sources', 'url' => ['/site/calculate-source']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Moderator Area', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

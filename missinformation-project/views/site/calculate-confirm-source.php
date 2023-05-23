@@ -3,7 +3,6 @@
 use yii\helpers\Html;
 
 $indice_attendibilita = $font->indice_fonte;
-$descrizione_notizia = $font->descrizione_fonte;
 ?>
 <div class="site-index">
     <h1>Infos:</h1>
@@ -22,21 +21,36 @@ $descrizione_notizia = $font->descrizione_fonte;
     <div class="body-content">
         <div class="row">
             <div class="col-lg-12">
-                <ul>
-                    <?php
-                    if ($indice_attendibilita < 50) {
-                        if ($font2 != null) {
-                            echo '<h2>This source is more affidable</h2>';
-                            echo " ";
-                            echo $font2->descrizione_fonte;
-                            echo '<p class="lead">You can trust this source because it has an affidability index of ', $font2->indice_fonte, ' </p>';
-                        } else {
-                            echo '<h2>We don\'t have more affidable sources for the same argument</h2>';
-                            echo '<p class="lead">For this argument, we don\'t have more affidable sourcess</p>';
-                        }
-                    }
-                    ?>
-                </ul>
+                <?php if($indice_attendibilita < 50):?>
+                    <?php if($font2 != null): ?>
+                        <?php 
+                            $i = 1;
+                            echo '<h2>These sources are more affidable</h2>';
+                        ?>
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th scope="col">Source Name</th>
+                                    <th scope="col">Reliability Index</th>
+                                    <th scope="col">Source Link</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                            <?php foreach($font2 as $ft2):?>
+                                <tr>
+                                    <td><?=$ft2->descrizione_fonte ?></td>
+                                    <td><?=$ft2->indice_fonte ?></td>
+                                    <td><?= Html::a(Html::encode($ft2->link_fonte), $ft2->link_fonte, ['target'=>'_blank'])?></td>
+                                </tr>
+                            </tbody>
+                            <?php endforeach; ?>
+                        </table>
+                    <?php else:
+                        echo '<h2>We don\'t have more affidable sources for the same argument</h2>';
+                        echo '<p class="lead">For this argument, we don\'t have more affidable sourcess</p>';
+                        endif;
+                    endif;       
+                    ?>   
             </div>
         </div>
 
