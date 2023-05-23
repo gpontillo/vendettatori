@@ -41,6 +41,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
         'items' => [
             ['label' => 'Home', 'url' => ['/site/index']],
             ['label' => 'Search News', 'url' => ['/site/calculate']],
+            ['label' => 'Search Sources', 'url' => ['/site/calculate-source']],
             Yii::$app->user->isGuest
                 ? ['label' => 'Moderator Area', 'url' => ['/site/login']]
                 : '<li class="nav-item">'

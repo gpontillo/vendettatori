@@ -180,7 +180,7 @@ class SiteController extends Controller
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) 
         {
             $query = Fonte::find()->where(['descrizione_fonte' => $modelSource->source])->one();
-            $query2 = Fonte::find()->Where('>', 'indice_fonte', 50)->one();
+            $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
 
             return $this->render('calculate-confirm-source', [
                 'font' => $query,
