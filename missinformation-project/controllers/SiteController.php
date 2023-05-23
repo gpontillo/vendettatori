@@ -14,6 +14,7 @@ use app\models\ReportNewArticle;
 use app\models\CalculateSourceForm;
 use app\models\Notizia;
 use app\models\Fonte;
+use app\models\Segnalazioni;
 use yii\web\Request;
 
 class SiteController extends Controller
@@ -207,7 +208,18 @@ class SiteController extends Controller
         $model = new ReportNewArticle();
         $model->url = Yii::$app->request->get('url');
 
-        if ($model->load(Yii::$app->request->post()) && $model->validate()) {            
+        if ($model->load(Yii::$app->request->post()) && $model->validate()) {
+            
+            $segnalazione = new Segnalazioni();
+            $id = Segnalazioni::find()->max('id');
+            if($id == null)
+                $id = 1;
+            $segnalazione->id = $id;
+            $segnalazione->url = $model->url;
+            $segnalazione->motivo = $model->motive;
+            $segnalazione->valutazione = $model->review;
+            $segnalazione->save();
+            
             return $this->redirect([
                 'calculate',
                 'success' => true
