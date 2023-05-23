@@ -7,8 +7,11 @@ use Yii;
 /**
  * This is the model class for table "fonte".
  *
- * @property int $id
+ * @property int $id_fonte
  * @property string $descrizione_fonte
+ * @property int $indice_fonte
+ *
+ * @property Notizia[] $notizias
  */
 class Fonte extends \yii\db\ActiveRecord
 {
@@ -26,11 +29,10 @@ class Fonte extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['descrizione_fonte'], 'required'],
+            [['id_fonte', 'descrizione_fonte', 'indice_fonte'], 'required'],
+            [['id_fonte', 'indice_fonte'], 'integer'],
             [['descrizione_fonte'], 'string', 'max' => 500],
-            [['link_fonte'], 'required'],
-            [['link_fonte'], 'string', 'max' => 2600],
-            [['indice_fonte'], 'integer']
+            [['id_fonte'], 'unique'],
         ];
     }
 
@@ -40,10 +42,19 @@ class Fonte extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id_fonte' => 'Id Fonte',
             'descrizione_fonte' => 'Descrizione Fonte',
-            'link_fonte' => 'Link Fonte',
-            'indice_fonte' => 'Indice Fonte'
+            'indice_fonte' => 'Indice Fonte',
         ];
+    }
+
+    /**
+     * Gets query for [[Notizias]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotizias()
+    {
+        return $this->hasMany(Notizia::class, ['fonte' => 'id_fonte']);
     }
 }

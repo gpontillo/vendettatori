@@ -142,23 +142,20 @@ class SiteController extends Controller
             // ricerca su db dell'url
             
             $query = Notizia::find()->where(['link' => $model->url ])->one();
-            $secondQuery = Fonte::find()->where(['link_fonte' => $model->secondUrl])->one(); 
-
 
             if(!$query)
             {
-
                 //TO-DO: form per aggiungere la notizia
-                // $query = new Notizia();
-                // $query->id = Notizia::find()->max('id') + 1;
-                // $query->tipo_categoria = 1;
-                // $query->link = $model->url;
-                // $query->descrizione_notizia = "Mock test";
-                // $query->indice_attendibilita = rand(1, 100);
-                // $query->data_pubblicazione = "1997-01-01" ;
-                // $query->data_accaduto = "1997-01-01" ;
-                // $query->coinvolgimento = "tizio caio" ;
-                // $query->save();
+                $query = new Notizia();
+                $query->id = Notizia::find()->max('id') + 1;
+                $query->tipo_categoria = 1;
+                $query->link = $model->url;
+                $query->descrizione_notizia = "Mock test";
+                $query->indice_attendibilita = rand(1, 100);
+                $query->data_pubblicazione = "1997-01-01" ;
+                $query->data_accaduto = "1997-01-01" ;
+                $query->coinvolgimento = "tizio caio" ;
+                $query->save();
             }
             
             $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
@@ -171,6 +168,16 @@ class SiteController extends Controller
         return $this->render('calculate', [
             'model' => $model,
         ]);
+    }
+
+    public function actionCalculateSource()
+    {
+        $mode = new CalculateSourceForm();
+
+        if($model->load(Yii::$app->request->post()) && $model->validate())
+        {
+            
+        }
     }
 
     /**
