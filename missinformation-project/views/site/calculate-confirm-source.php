@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use app\models\Fonte;
 
 ?>
+
 
 <?php if(($font == null) || ($font2 == null)): ?>
 

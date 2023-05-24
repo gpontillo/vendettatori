@@ -63,22 +63,39 @@ class Fonte extends \yii\db\ActiveRecord
 
     public function FonteCalcolata()
     {
-        $rows = (new \yii\db\Query())
-            ->select(['indice_affidabilita'])
-            ->from('notizia', 'fonte')
-            ->where(['fonte' => 'id_fonte'])
+        $firstResult = (new \yii\db\Query())
+            ->select(['indice_attendibilita'])
+            ->from('notizia')
+            ->join('INNER JOIN', 'fonte', 'fonte = id_fonte')
             ->all();
-        
+
+        $secondResult = (new \yii\db\Query())
+        ->select(['id_fonte'])
+        ->from('fonte')
+        ->join('INNER JOIN', 'notizia', 'fonte = id_fonte')
+        ->one();
+
         $sum = 0;
         $i = 0;
 
-        foreach($rows as $row):
-            $sum += $row;
-            $i++;
+        foreach($firstResult as $row):
+            foreach($row as $r):
+                $sum += $r;
+                $i++;
+            endforeach;
+        endforeach;
+
+        $toPass;
+
+        foreach($secondResult as $row):
+            $toPass = $row;
         endforeach;
 
         $media = $sum / $i;
 
-        return $media;
+        Yii::$app->db->createCommand()
+          ->update('fonte', ['indice_fonte' => round($media, 0)], ['id_fonte' => $toPass])
+          ->execute();
+        
     }
 }

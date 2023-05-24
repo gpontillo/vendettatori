@@ -4,7 +4,8 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 use yii\model\Categoria;
 use yii\model\Notizia;
-use yii\model\Fonte;
+use app\models\Fonte;
+
 ?>
 <div class="site-contact">
     <div class="row">
