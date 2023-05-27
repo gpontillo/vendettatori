@@ -15,6 +15,7 @@ use app\models\CalculateSourceForm;
 use app\models\Notizia;
 use app\models\Fonte;
 use app\models\Segnalazioni;
+use app\models\SegnalazioniSearch;
 use yii\web\Request;
 
 class SiteController extends Controller
@@ -84,7 +85,8 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-            return $this->goBack();
+
+    
         }
 
         $model->password = '';
@@ -232,4 +234,6 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+
 }

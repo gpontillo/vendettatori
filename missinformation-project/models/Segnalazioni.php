@@ -11,6 +11,7 @@ use Yii;
  * @property string $url
  * @property string $motivo
  * @property int $valutazione
+ * @property string $esito
  */
 class Segnalazioni extends \yii\db\ActiveRecord
 {
@@ -32,6 +33,7 @@ class Segnalazioni extends \yii\db\ActiveRecord
             [['id', 'valutazione'], 'integer'],
             [['url'], 'string', 'max' => 50],
             [['motivo'], 'string', 'max' => 200],
+            [['esito'], 'string', 'max' => 100],
             [['id'], 'unique'],
         ];
     }
@@ -46,6 +48,7 @@ class Segnalazioni extends \yii\db\ActiveRecord
             'url' => 'Url',
             'motivo' => 'Motivo',
             'valutazione' => 'Valutazione',
+            'esito' => 'Esito'
         ];
     }
 }

@@ -31,11 +31,14 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
 
 <header id="header">
     <?php
+
+    if(Yii::$app->user->isGuest):
     NavBar::begin([
         'brandLabel' => 'Missinformation Fight System',
-        'brandUrl' => Yii::$app->homeUrl,
+        'brandUrl' => "",
         'options' => ['class' => 'navbar-expand-md navbar-dark navbar-color fixed-top']
     ]);
+    
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
@@ -43,7 +46,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Search News', 'url' => ['/site/calculate']],
             ['label' => 'Search Sources', 'url' => ['/site/calculate-source']],
             Yii::$app->user->isGuest
-                ? ['label' => 'Moderator Area', 'url' => ['/site/login']]
+                ? ['label' => 'Moderator Area', 'url' => ['/segnalazioni/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
@@ -52,17 +55,44 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
                     )
                     . Html::endForm()
                     . '</li>'
+                
         ]
     ]);
     NavBar::end();
+else:
+     NavBar::begin([
+        'brandLabel' => 'Missinformation Fight System',
+        'brandUrl' => "",
+        'options' => ['class' => 'navbar-expand-md navbar-dark navbar-color fixed-top']
+    ]);
+    
+    echo Nav::widget([
+        'options' => ['class' => 'navbar-nav'],
+        'items' => [
+            
+            Yii::$app->user->isGuest
+                ? ['label' => 'Moderator Area', 'url' => ['/segnalazioni/login']]
+                : '<li class="nav-item">'
+                    . Html::beginForm(['/site/logout'])
+                    . Html::submitButton(
+                        'Logout (' . Yii::$app->user->identity->username . ')',
+                        ['class' => 'nav-link btn btn-link logout']
+                    )
+                    . Html::endForm()
+                    . '</li>'
+                
+        ]
+    ]);
+    NavBar::end();
+endif;
     ?>
 </header>
 
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?= Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
-        <?php endif ?>
+            <?=  Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+        <?php endif; ?>
         <?= Alert::widget() ?>
         <?= $content ?>
     </div>
