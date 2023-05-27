@@ -21,26 +21,40 @@ $this->title = 'Users\' reports';
 
 
     <p>
-        <?php // Html::a('Create Segnalazioni', ['create'], ['class' => 'btn btn-success']) ?>
+        <?php // Html::a('Create Segnalazioni', ['create'], ['class' => 'btn btn-success']) 
+        ?>
     </p>
 
-    <?php // echo $this->render('_search', ['model' => $searchModel]); ?>
+    <?php // echo $this->render('_search', ['model' => $searchModel]); 
+    ?>
 
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'filterModel' => $searchModel,
         'columns' => [
             ['class' => 'yii\grid\SerialColumn'],
-
             'url:url',
             'motivo',
-            'valutazione',
-            'esito',
+            [
+                'attribute' => 'valutazione',
+                'value' => function($model){
+                    return Segnalazioni::getValutazione($model->valutazione);
+                },
+                'filter'=>Segnalazioni::VALUTAZIONI_ARRAY,
+            ],
+            [
+                'attribute' => 'esito',
+                'value' => function($model){
+                    return Segnalazioni::getEsito($model->esito);
+                },
+                'filter'=>Segnalazioni::ESITO_ARRAY,
+            ],
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Segnalazioni $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
-                 }
+                },
+                'template' => '{view} {update}',
             ],
         ],
     ]); ?>

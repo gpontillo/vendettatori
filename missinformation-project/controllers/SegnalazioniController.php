@@ -5,6 +5,7 @@ namespace app\controllers;
 use Yii;
 use app\models\Segnalazioni;
 use app\models\LoginForm;
+use app\models\Notizia;
 use app\models\SegnalazioniSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -57,8 +58,14 @@ class SegnalazioniController extends Controller
      */
     public function actionView($id)
     {
+        $news = null;
+        $report = $this->findModel($id);
+
+        $news = Notizia::find()->where(['link' => $report->url])->one();
+
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $report,
+            'news' => $news
         ]);
     }
 

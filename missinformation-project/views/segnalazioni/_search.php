@@ -1,11 +1,12 @@
 <?php
 
 use yii\helpers\Html;
-use yii\widgets\ActiveForm;
+use yii\bootstrap5\ActiveForm;
+use app\models\Segnalazioni;
 
 /** @var yii\web\View $this */
 /** @var app\models\SegnalazioniSearch $model */
-/** @var yii\widgets\ActiveForm $form */
+/** @var yii\bootstrap5\ActiveForm $form */
 ?>
 
 <div class="segnalazioni-search">
@@ -19,9 +20,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'motivo') ?>
 
-    <?= $form->field($model, 'valutazione') ?>
+    <?= $form->field($model, 'valutazione')->dropdownList(
+        Segnalazioni::VALUTAZIONI_ARRAY
+    ) ?>
     
-    <?= $form->field($model, 'esito') ?>
+    <?= $form->field($model, 'esito')->dropdownList(
+        Segnalazioni::ESITO_ARRAY
+    ) ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

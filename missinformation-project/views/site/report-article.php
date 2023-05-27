@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Segnalazioni;
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 ?>
@@ -37,7 +38,12 @@ use yii\bootstrap5\ActiveForm;
     ]); ?>
     <?= $form->field($model, 'url')->textInput(['autofocus' => true, 'disabled' => true]) ?>
     <?= $form->field($model, 'motive')->textarea() ?>
-    <?= $form->field($model, 'review')->radioList([0 => 'It\'s unreliable', 25 => 'It\'s mostly unrealible', 50 => 'I don\'t know', 75 => 'It\'s mostrly reliable', 100 => 'It\'s reliable'], ['style' => 'display: block']) ?>
+    <?= 
+        $form->field($model, 'review')->radioList(
+            Segnalazioni::VALUTAZIONI_ARRAY, 
+            ['style' => 'display: block']
+        ) 
+    ?>
     <div class="form-group">
         <div class="col-lg-11 mt-2">
             <?= Html::submitButton('Send', ['class' => 'btn btn-primary', 'name' => 'send-button']) ?>

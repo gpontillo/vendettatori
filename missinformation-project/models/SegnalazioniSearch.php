@@ -17,8 +17,8 @@ class SegnalazioniSearch extends Segnalazioni
     public function rules()
     {
         return [
-            [['id', 'valutazione'], 'integer'],
-            [['url', 'motivo', 'esito'], 'safe'],
+            [['id', 'valutazione', 'esito'], 'integer'],
+            [['url', 'motivo'], 'safe'],
         ];
     }
 
@@ -60,11 +60,11 @@ class SegnalazioniSearch extends Segnalazioni
         $query->andFilterWhere([
             'id' => $this->id,
             'valutazione' => $this->valutazione,
+            'esito' => $this->esito,
         ]);
 
         $query->andFilterWhere(['like', 'url', $this->url])
-            ->andFilterWhere(['like', 'motivo', $this->motivo])
-            ->andFilterWhere(['like','esito', $this->esito]);
+            ->andFilterWhere(['like', 'motivo', $this->motivo]);
 
         return $dataProvider;
     }
