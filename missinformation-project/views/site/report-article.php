@@ -4,13 +4,29 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 ?>
 <div class="site-login">
-    <h3>News not found</h3>
-    <p>
-        Seems that the news that you where looking for is not yet calculated. Help us by sending a report on this news so we can verify it for you!
-    </p>
-    <h4>Report news not found</h4>
+    <?php
+    if($model->is_already_in_db) {
+        echo '
+            <h3>Report news</h3>
+            <p>
+                Compile this form to give us the information to review your report. Thank you for your time!
+            </p>
+            <h4>Report news form</h4>
+        ';
+    }
+    else {
+        echo '
+            <h3>News not found</h3>
+            <p>
+                Seems that the news that you where looking for is not yet calculated. Help us by sending a report on this news so we can verify it for you!
+            </p>
+            <h4>Report news not found</h4>
+        ';
+    }
+    ?>
+    
     <?php $form = ActiveForm::begin([
-        'id' => 'report-new-article-form',
+        'id' => 'report-article-form',
         'layout' => 'horizontal',
         'fieldConfig' => [
             'template' => "{label}\n{input}\n{error}",
@@ -19,7 +35,7 @@ use yii\bootstrap5\ActiveForm;
             'errorOptions' => ['class' => 'col-lg-7 invalid-feedback'],
         ],
     ]); ?>
-    <?= $form->field($model, 'url')->textInput(['autofocus' => true]) ?>
+    <?= $form->field($model, 'url')->textInput(['autofocus' => true, 'disabled' => true]) ?>
     <?= $form->field($model, 'motive')->textarea() ?>
     <?= $form->field($model, 'review')->radioList([0 => 'It\'s unreliable', 25 => 'It\'s mostly unrealible', 50 => 'I don\'t know', 75 => 'It\'s mostrly reliable', 100 => 'It\'s reliable'], ['style' => 'display: block']) ?>
     <div class="form-group">

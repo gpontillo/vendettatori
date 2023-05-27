@@ -30,7 +30,7 @@ use yii\model\Fonte;
         <div class="col">
             <h4>Search by URL</h4>
             <?php $form = ActiveForm::begin([
-                'id' => 'report-new-article-form',
+                'id' => 'report-article-form',
                 'layout' => 'horizontal',
                 'fieldConfig' => [
                     'template' => "{label}\n{input}\n{error}",
