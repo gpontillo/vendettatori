@@ -146,14 +146,20 @@ class SiteController extends Controller
             // ricerca su db dell'url
 
             $query = Notizia::find()->where(['link' => $model->url])->one();
+            $news1 = null;
+            $news2 = null;
 
             if (!$query) {
-                $this->redirect(['report-article', 'url' => $model->url]);
-            } else {
-                $query2 = Notizia::find()->where(['tipo_categoria' => $query->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();
+                $news1 = Notizia::calculateNotizia($model->url);
+                if(!$news1) {
+                    $this->redirect(['report-article', 'url' => $model->url]);
+                }
+            }
+            if($news1){
+                $news2 = Notizia::find()->where(['tipo_categoria' => $news1->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();  
                 return $this->render('calculate-confirm', [
-                    'news' => $query,
-                    'news2' => $query2,
+                    'news' => $news1,
+                    'news2' => $news2,
                 ]);
             }
         } else

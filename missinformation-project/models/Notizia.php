@@ -2,7 +2,9 @@
 
 namespace app\models;
 
+use Exception;
 use Yii;
+use yii\httpclient\Client;
 
 /**
  * This is the model class for table "notizia".
@@ -83,5 +85,37 @@ class Notizia extends \yii\db\ActiveRecord
     public function getTipoCategoria()
     {
         return $this->hasOne(Categoria::class, ['id_categoria' => 'tipo_categoria']);
+    }
+
+    public static function calculateNotizia(string $url) {
+        $client = new Client();
+        $key = 'AIzaSyByXBZw2RxpQ3nxXuaI3aGPAKUSocXnYfk';
+        $response = $client->createRequest()
+            ->setMethod('GET')
+            ->setUrl('https://factchecktools.googleapis.com/v1alpha1/claims:search?query='.$url.'&key='.$key)
+            ->send();
+        if ($response->isOk) {
+            $claim = $response->data['claims'][0];
+            if($claim) {
+                $notizia = new Notizia();
+                $notizia->id = Notizia::find()->max('id');
+                if ($notizia->id == null)
+                    $notizia->id = 1;
+                else
+                    $notizia->id++;
+                $notizia->link = $url;
+                $notizia->descrizione_notizia = $claim['text'];
+                $notizia->tipo_categoria = 1;
+                $notizia->fonte = 1;
+                $notizia->indice_attendibilita = 0;
+                $notizia->data_pubblicazione = $claim['claimDate'];
+                $notizia->data_accaduto = $claim['claimDate'];
+                $notizia->coinvolgimento = "pippo";
+                $notizia->save();
+                return $notizia;
+            }
+        }
+        throw new Exception($response);
+        return null;
     }
 }
