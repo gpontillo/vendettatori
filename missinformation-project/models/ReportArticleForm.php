@@ -5,16 +5,17 @@ namespace app\models;
 use Yii;
 use yii\base\Model;
 
-class ReportNewArticle extends Model
+class ReportArticleForm extends Model
 {
     public $url;
     public $motive;
     public $review;
+    public $is_already_in_db = false;
 
     public function rules()
     {
         return [
-            [['url', 'motive', 'review'], 'required'],
+            [['url', 'motive', 'review'], 'required', 'message'=>'This field is required'],
             ['url','url', 'defaultScheme' => 'http'],
         ];
     }

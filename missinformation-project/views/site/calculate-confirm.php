@@ -20,7 +20,6 @@ $dataAccaduto = $news->data_accaduto;
                 </div>
             ';
     ?>
-    <h1>Notizie</h1>
     <div class="jumbotron text-center bg-transparent">
         <?php
         if ($indice_attendibilita >= 50) {
@@ -80,6 +79,7 @@ $dataAccaduto = $news->data_accaduto;
                 </ul>
                 <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => $news->tipo_categoria], ['class' => 'btn btn-outline-secondary']) ?>
                 <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary']) ?>
+                <?= Html::a('Report article', ['/site/report-article', 'url' => $news->link, 'id' => $news->id], ['class' => 'btn btn-outline-secondary']) ?>
             </div>
         </div>
     </div>
