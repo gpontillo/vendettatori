@@ -56,7 +56,9 @@ $this->params['breadcrumbs'][] = ['label' => 'Report infos'];
     ?>
 
     <p>
-        <?= Html::a('Choose a verdict', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+
+
+        <?= Html::a('Choose a verdict', $model->esito == 0 ? ['update', 'id' => $model->id] : "", ['class' => $model->esito == 0 ? 'btn btn-primary' : 'btn btn-primary disabled' ]) ?>
         <?= Html::a('Go back', ['index'], ['class' => 'btn btn-danger']) ?>
     </p>
 
