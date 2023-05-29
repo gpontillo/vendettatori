@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /** @var app\models\Segnalazioni $model */
 
 $this->title = 'Update report: ';
-$this->params['breadcrumbs'][] = ['label' => 'Users\' reports', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Users\' reports', 'url' => ['segnalazioni/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Report infos', 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Report\'s verdict';
 ?>

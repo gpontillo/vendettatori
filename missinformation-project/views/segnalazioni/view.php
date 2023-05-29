@@ -8,7 +8,7 @@ use app\models\Segnalazioni;
 /** @var app\models\Segnalazioni $model */
 
 $this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Users\' reports', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Users\' reports', 'url' => ['segnalazioni/index']];
 $this->params['breadcrumbs'][] = ['label' => 'Report infos'];
 \yii\web\YiiAsset::register($this);
 ?>
@@ -57,6 +57,7 @@ $this->params['breadcrumbs'][] = ['label' => 'Report infos'];
 
     <p>
         <?= Html::a('Choose a verdict', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Go back', ['index'], ['class' => 'btn btn-danger']) ?>
     </p>
 
 </div>

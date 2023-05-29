@@ -45,7 +45,7 @@ class SegnalazioniController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel,
+            'searchModel' => $searchModel, 
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -151,14 +151,8 @@ class SegnalazioniController extends Controller
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
-            $searchModel = new SegnalazioniSearch();
-            $dataProvider = $searchModel->search($this->request->queryParams);
-
-            return $this->render('index', [
-                'searchModel' => $searchModel,
-                'dataProvider' => $dataProvider,
-             ]);
-    
+            return $this->actionIndex();
+            
         }
 
         $model->password = '';
