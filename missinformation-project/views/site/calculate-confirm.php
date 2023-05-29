@@ -10,15 +10,8 @@ $dataAccaduto = $news->data_accaduto;
 <div class="site-index">
     <?php
     //da controllare il cockie
-    if (true)
-        echo '
-                <div class="alert alert-warning d-flex align-items-center" role="alert">
-                    <svg class="bi flex-shrink-0 me-2" width="24" height="24" role="img" aria-label="Warning:"><use xlink:href="#exclamation-triangle-fill"/></svg>
-                    <div>
-                        La fonte di questa notizia è stata bloccata. <a href="https://www.w3schools.com">Clicca qui per sbloccarla</a>
-                    </div>
-                </div>
-            ';
+    
+    
     ?>
     <div class="jumbotron text-center bg-transparent">
         <?php
@@ -78,7 +71,8 @@ $dataAccaduto = $news->data_accaduto;
                     ?>
                 </ul>
                 <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => $news->tipo_categoria], ['class' => 'btn btn-outline-secondary']) ?>
-                <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary']) ?>
+                <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary', 'name' => 'Block']) ?>
+                
                 <?= Html::a('Report article', ['/site/report-article', 'url' => $news->link, 'id' => $news->id], ['class' => 'btn btn-outline-secondary']) ?>
             </div>
         </div>
