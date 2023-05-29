@@ -54,7 +54,7 @@ $this->title = 'Users\' reports';
                 'urlCreator' => function ($action, Segnalazioni $model, $key, $index, $column) {
                     return Url::toRoute([$action, 'id' => $model->id]);
                 },
-                'template' => '{view} {update}',
+                'template' => '{view}',
             ],
         ],
     ]); ?>
