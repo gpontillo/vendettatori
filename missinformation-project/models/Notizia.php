@@ -144,7 +144,8 @@ class Notizia extends \yii\db\ActiveRecord
                 }
             }
             if (!$notizia->save()) {
-                throw new Exception("Error on save");
+                $notizia->validate();
+                throw new Exception("Error on save".implode($notizia->errors));
             };
             return $notizia;
         } else {
@@ -186,13 +187,13 @@ class Notizia extends \yii\db\ActiveRecord
                 $notizia->id++;
             $notizia->link = $url;
             $notizia->descrizione_notizia = $response->data['title'];
-            $notizia->argomento = Notizia::filterEntities($response->data["entities"], 0);
+            $notizia->argomento = Notizia::filterEntities($response->data["entities"] ?? [], 0);
             $notizia->fonte = Notizia::findFonte($url);
-            $notizia->data_pubblicazione = $response->data['publish_date'];
-            $notizia->data_accaduto = $response->data['publish_date'];
-            $notizia->coinvolgimento = Notizia::filterEntities($response->data["entities"], 1);
+            $notizia->data_pubblicazione = $response->data['publish_date'] ?? date("Y-m-d");
+            $notizia->data_accaduto = $response->data['publish_date'] ?? date("Y-m-d");
+            $notizia->coinvolgimento = Notizia::filterEntities($response->data["entities"] ?? [], 1);
             $notizia->indice_attendibilita = -1;
-            $notizia->luogo = Notizia::filterEntities($response->data["entities"], 2);
+            $notizia->luogo = Notizia::filterEntities($response->data["entities"] ?? [], 2);
             $notizia->from_api = 0;
         } else {
             throw new Exception($response);
