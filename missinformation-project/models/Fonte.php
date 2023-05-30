@@ -73,7 +73,7 @@ class Fonte extends \yii\db\ActiveRecord
         ->select(['id_fonte'])
         ->from('fonte')
         ->join('INNER JOIN', 'notizia', 'fonte = id_fonte')
-        ->one();
+        ->all();
 
         $sum = 0;
         $i = 0;
@@ -91,7 +91,8 @@ class Fonte extends \yii\db\ActiveRecord
             $toPass = $row;
         endforeach;
 
-        $media = $sum / $i;
+        if($i == 0) $media = 0;
+        else $media = $sum / $i;
 
         Yii::$app->db->createCommand()
           ->update('fonte', ['indice_fonte' => round($media, 0)], ['id_fonte' => $toPass])
