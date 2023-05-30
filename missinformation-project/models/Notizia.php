@@ -4,13 +4,11 @@ namespace app\models;
 
 use Exception;
 use Yii;
-<<<<<<< HEAD
 use yii\httpclient\Client;
 use app\models\Segnalazioni;
-=======
+
 use app\models\external_apis\FactCheckToolsController;
 use app\models\external_apis\WorldNewsController;
->>>>>>> 3f9408cc90aeb6043f2c81eef0c065e2ce0918d6
 
 /**
  * This is the model class for table "{{%notizia}}".
@@ -151,30 +149,27 @@ class Notizia extends \yii\db\ActiveRecord
         return null;
     }
 
-<<<<<<< HEAD
 
     public function CalcolaNotizia($url)
     {
        
-         $reports = Segnalazioni::find()->where(['like', 'url', $url . '%', false]);
+        $reports = Segnalazioni::find()
+                                ->where(['like', 'url', $url . '%', false])
+                                ->all();
 
-         $countNegative = 0;
-         $countPositive = 0;
+        $countNegative = 0;
+        $countPositive = 0;
 
         foreach($reports as $report):
-            if($report->esito == 1) 
-            {
-                $countPositive++;
-            } 
-            else if($report->esito == -1)
-                 {
-                    $countNegative++;
-                 }
+            if($report->esito == 1) $countPositive++;
+            else if($report->esito == -1) $countNegative++;
         endforeach;
 
-            
 
-=======
+
+    }
+
+
     public static function generateNotizia(string $url): Notizia{
         $client = new WorldNewsController();
         $response = $client->extract($url);
@@ -200,6 +195,6 @@ class Notizia extends \yii\db\ActiveRecord
             throw new Exception($response);
         }
         return $notizia;
->>>>>>> 3f9408cc90aeb6043f2c81eef0c065e2ce0918d6
+
     }
 }
