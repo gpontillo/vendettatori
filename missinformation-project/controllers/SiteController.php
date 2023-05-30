@@ -181,7 +181,7 @@ class SiteController extends Controller
         $modelSource = new CalculateSourceForm();
 
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) {
-            $query = Fonte::find()->where(['descrizione_fonte' => $modelSource->source])->one();
+            $query = Fonte::find()->where(['nome_fonte' => $modelSource->source])->one();
             $query2 = null;
             
             if($query != null) {

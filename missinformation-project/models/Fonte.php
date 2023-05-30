@@ -33,6 +33,7 @@ class Fonte extends \yii\db\ActiveRecord
         return [
             [['id_fonte', 'descrizione_fonte', 'indice_fonte'], 'required'],
             [['id_fonte', 'indice_fonte'], 'integer'],
+            [['nome_fonte'], 'string', 'max' => 255],
             [['descrizione_fonte'], 'string', 'max' => 500],
             [['link_fonte'], 'string', 'max' => 255],
             [['id_fonte'], 'unique'],
@@ -46,8 +47,10 @@ class Fonte extends \yii\db\ActiveRecord
     {
         return [
             'id_fonte' => 'Id Fonte',
+            'nome_fonte' => 'Nome Fonte',
             'descrizione_fonte' => 'Descrizione Fonte',
             'indice_fonte' => 'Indice Fonte',
+
         ];
     }
 

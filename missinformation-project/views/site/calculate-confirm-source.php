@@ -9,7 +9,6 @@ use app\models\Fonte;
 
 <?php if($font == null): ?>
 
-
     <div class="jumbotron text-center bg-transparent">
         <?php
             echo '<h1 class="display-4">The source does not exist!</h1>';
@@ -44,7 +43,7 @@ use app\models\Fonte;
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Source Name</th>
+                                    <th scope="col">Source Description</th>
                                     <th scope="col">Reliability Index</th>
                                     <th scope="col">Source Link</th>
                                 </tr>
