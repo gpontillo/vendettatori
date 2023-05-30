@@ -4,33 +4,40 @@ namespace app\models;
 
 use Exception;
 use Yii;
+<<<<<<< HEAD
 use yii\httpclient\Client;
 use app\models\Segnalazioni;
+=======
+use app\models\external_apis\FactCheckToolsController;
+use app\models\external_apis\WorldNewsController;
+>>>>>>> 3f9408cc90aeb6043f2c81eef0c065e2ce0918d6
 
 /**
- * This is the model class for table "notizia".
+ * This is the model class for table "{{%notizia}}".
  *
  * @property int $id
  * @property string $link
  * @property string $descrizione_notizia
- * @property int|null $tipo_categoria
+ * @property string|null $argomento
  * @property int|null $fonte
  * @property int $indice_attendibilita
  * @property string $data_pubblicazione
  * @property string|null $data_accaduto
  * @property string|null $coinvolgimento
+ * @property string|null $luogo
+ * @property int $from_api
  *
  * @property Fonte $fonte0
- * @property Categoria $tipoCategoria
  */
 class Notizia extends \yii\db\ActiveRecord
 {
+    public const separatorSoggetti = ';';
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'notizia';
+        return '{{%notizia}}';
     }
 
     /**
@@ -40,12 +47,12 @@ class Notizia extends \yii\db\ActiveRecord
     {
         return [
             [['id', 'link', 'descrizione_notizia', 'indice_attendibilita', 'data_pubblicazione'], 'required'],
-            [['id', 'tipo_categoria', 'fonte', 'indice_attendibilita'], 'integer'],
+            [['id', 'fonte', 'indice_attendibilita', 'from_api'], 'integer'],
             [['data_pubblicazione', 'data_accaduto'], 'safe'],
             [['link'], 'string', 'max' => 2600],
-            [['descrizione_notizia', 'coinvolgimento'], 'string', 'max' => 255],
+            [['descrizione_notizia', 'argomento', 'coinvolgimento'], 'string', 'max' => 255],
+            [['luogo'], 'string', 'max' => 20],
             [['id'], 'unique'],
-            [['tipo_categoria'], 'exist', 'skipOnError' => true, 'targetClass' => Categoria::class, 'targetAttribute' => ['tipo_categoria' => 'id_categoria']],
             [['fonte'], 'exist', 'skipOnError' => true, 'targetClass' => Fonte::class, 'targetAttribute' => ['fonte' => 'id_fonte']],
         ];
     }
@@ -59,12 +66,14 @@ class Notizia extends \yii\db\ActiveRecord
             'id' => 'ID',
             'link' => 'Link',
             'descrizione_notizia' => 'Descrizione Notizia',
-            'tipo_categoria' => 'Tipo Categoria',
+            'argomento' => 'Argomento',
             'fonte' => 'Fonte',
             'indice_attendibilita' => 'Indice Attendibilita',
             'data_pubblicazione' => 'Data Pubblicazione',
             'data_accaduto' => 'Data Accaduto',
             'coinvolgimento' => 'Coinvolgimento',
+            'luogo' => 'Luogo',
+            'from_api' => 'From Api',
         ];
     }
 
@@ -78,48 +87,71 @@ class Notizia extends \yii\db\ActiveRecord
         return $this->hasOne(Fonte::class, ['id_fonte' => 'fonte']);
     }
 
-    /**
-     * Gets query for [[TipoCategoria]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getTipoCategoria()
-    {
-        return $this->hasOne(Categoria::class, ['id_categoria' => 'tipo_categoria']);
+    private static function filterEntities($entities, int $mode = 0): string {
+        /* values of mode:
+            - '0' : all subjects
+            - '1' : remove locations
+            - '2' : only locations
+        */
+        $list_entities = "";
+
+        foreach ($entities as $entity) {
+            if($mode == 0 || ($mode == 1 && $entity['type'] != 'LOC') || ($mode == 2 && $entity['type'] == 'LOC')) {
+                $list_entities = $list_entities.$entity['name'].';';
+            }
+        }
+
+        $list_entities2 = substr($list_entities, 0, -1);
+        if($list_entities2 != false)
+            $list_entities = $list_entities2;
+
+        return $list_entities;
+    }
+
+    private static function findFonte($url) {
+        $scomposedUrl = parse_url($url);
+        $composedUrl = $scomposedUrl['scheme'].'://'.$scomposedUrl['host'];
+
+        $id_fonte = Fonte::find()->select(['id_fonte'])->where(['link_fonte' => $composedUrl])->one();
+        if($id_fonte !== null)
+            return $id_fonte;
+        else {
+            $newFonte = new Fonte();
+            $newFonte->id_fonte = Fonte::find()->max('id_fonte');
+            if ($newFonte->id_fonte == null)
+                $newFonte->id_fonte = 1;
+            else
+                $newFonte->id_fonte++;
+            $newFonte->descrizione_fonte = "Source calculated with API";
+            $newFonte->link_fonte = $composedUrl;
+            $newFonte->indice_fonte = 0;
+            $newFonte->save();
+            return $newFonte->id_fonte;
+        }
     }
 
     public static function calculateNotizia(string $url) {
-        $client = new Client();
-        $key = 'AIzaSyByXBZw2RxpQ3nxXuaI3aGPAKUSocXnYfk';
-        $response = $client->createRequest()
-            ->setMethod('GET')
-            ->setUrl('https://factchecktools.googleapis.com/v1alpha1/claims:search?query='.$url.'&key='.$key)
-            ->send();
+        $client = new FactCheckToolsController();
+        $response = $client->search($url);
         if ($response->isOk) {
             $claim = $response->data['claims'][0];
             if($claim) {
-                $notizia = new Notizia();
-                $notizia->id = Notizia::find()->max('id');
-                if ($notizia->id == null)
-                    $notizia->id = 1;
-                else
-                    $notizia->id++;
-                $notizia->link = $url;
-                $notizia->descrizione_notizia = $claim['text'];
-                $notizia->tipo_categoria = 1;
-                $notizia->fonte = 1;
+                $notizia = Notizia::generateNotizia($url);
                 $notizia->indice_attendibilita = 0;
-                $notizia->data_pubblicazione = $claim['claimDate'];
-                $notizia->data_accaduto = $claim['claimDate'];
-                $notizia->coinvolgimento = "pippo";
-                $notizia->save();
+                $notizia->from_api = 1;
+                if(!$notizia->save()) {
+                    throw new Exception("Error on save");
+                };
                 return $notizia;
             }
         }
-        throw new Exception($response);
+        else {
+            throw new Exception($response);
+        }
         return null;
     }
 
+<<<<<<< HEAD
 
     public function CalcolaNotizia($url)
     {
@@ -142,5 +174,32 @@ class Notizia extends \yii\db\ActiveRecord
 
             
 
+=======
+    public static function generateNotizia(string $url): Notizia{
+        $client = new WorldNewsController();
+        $response = $client->extract($url);
+        if ($response->isOk) {
+            $notizia = new Notizia();
+            $notizia->id = Notizia::find()->max('id');
+            if ($notizia->id == null)
+                $notizia->id = 1;
+            else
+                $notizia->id++;
+            $notizia->link = $url;
+            $notizia->descrizione_notizia = $response->data['title'];
+            $notizia->argomento = Notizia::filterEntities($response->data["entities"], 0);
+            $notizia->fonte = Notizia::findFonte($url);
+            $notizia->data_pubblicazione = $response->data['publish_date'];
+            $notizia->data_accaduto = $response->data['publish_date'];
+            $notizia->coinvolgimento = Notizia::filterEntities($response->data["entities"], 1);
+            $notizia->indice_attendibilita = -1;
+            $notizia->luogo = Notizia::filterEntities($response->data["entities"], 2);
+            $notizia->from_api = 0;
+        }
+        else {
+            throw new Exception($response);
+        }
+        return $notizia;
+>>>>>>> 3f9408cc90aeb6043f2c81eef0c065e2ce0918d6
     }
 }

@@ -1,11 +1,13 @@
 <?php
 
 use yii\helpers\Html;
+use app\models\Notizia;
 
 $indice_attendibilita = $news->indice_attendibilita;
-$soggetti = $news->coinvolgimento;
+$soggetti = explode(Notizia::separatorSoggetti,$news->coinvolgimento);
 $dataPubblicazione = $news->data_pubblicazione;
 $dataAccaduto = $news->data_accaduto;
+$fonte = $news->getFonte0()->one()->link_fonte;
 ?>
 <div class="site-index">
     <?php
@@ -33,11 +35,13 @@ $dataAccaduto = $news->data_accaduto;
         </div>
         <div class="row">
             <div class="col-lg-6">
-                <h3>Subjects of the article</h3>
+                <h3>Subjects involved</h3>
                 <ul>
-                    <li>
-                        <?= $soggetti ?>
-                    </li>
+                    <?php 
+                        foreach($soggetti as $soggetto) {
+                            echo '<li>'.$soggetto.'</li>';
+                        } 
+                    ?>
                 </ul>
             </div>
             <div class="col-lg-6">
@@ -48,6 +52,9 @@ $dataAccaduto = $news->data_accaduto;
                     </li>
                     <li>Event date:
                         <?= $dataAccaduto ?>
+                    </li>
+                    <li>Source:
+                        <?= $fonte ?>
                     </li>
                 </ul>
             </div>
@@ -70,9 +77,8 @@ $dataAccaduto = $news->data_accaduto;
                     }
                     ?>
                 </ul>
-                <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => $news->tipo_categoria], ['class' => 'btn btn-outline-secondary']) ?>
+                <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => 0], ['class' => 'btn btn-outline-secondary']) ?>
                 <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary', 'name' => 'Block']) ?>
-                
                 <?= Html::a('Report article', ['/site/report-article', 'url' => $news->link, 'id' => $news->id], ['class' => 'btn btn-outline-secondary']) ?>
             </div>
         </div>

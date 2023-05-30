@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
-use yii\model\Categoria;
 use yii\model\Notizia;
 use yii\model\Fonte;
 ?>

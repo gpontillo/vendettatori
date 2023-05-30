@@ -45,8 +45,8 @@ class Segnalazioni extends \yii\db\ActiveRecord
         return [
             [['id', 'url', 'motivo', 'valutazione'], 'required'],
             [['id', 'valutazione', 'esito'], 'integer'],
-            [['url'], 'string', 'max' => 50],
-            [['motivo'], 'string', 'max' => 200],
+            [['url'], 'string', 'max' => 255],
+            [['motivo'], 'string', 'max' => 500],
             [['id'], 'unique'],
         ];
     }

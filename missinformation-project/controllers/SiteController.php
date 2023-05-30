@@ -158,7 +158,7 @@ class SiteController extends Controller
                 }
             }
             if($news1){
-                $news2 = Notizia::find()->where(['tipo_categoria' => $news1->tipo_categoria])->andWhere(['>', 'indice_attendibilita', 50])->one();  
+                $news2 = Notizia::find()->where(['>', 'indice_attendibilita', 50])->one();  
                 return $this->render('calculate-confirm', [
                     'news' => $news1,
                     'news2' => $news2,
@@ -199,7 +199,7 @@ class SiteController extends Controller
      */
     public function actionSimilarArticles($argument)
     {
-        $list_news = Notizia::find()->where(['tipo_categoria' => $argument])->orderBy(['indice_attendibilita' => SORT_ASC])->all();
+        $list_news = [];//Notizia::find()->where(['tipo_categoria' => $argument])->orderBy(['indice_attendibilita' => SORT_ASC])->all();
         return $this->render('similar-articles', ['list_news' => $list_news]);
     }
 
