@@ -61,41 +61,27 @@ class Fonte extends \yii\db\ActiveRecord
         return $this->hasMany(Notizia::class, ['fonte' => 'id_fonte']);
     }
 
-    public function FonteCalcolata()
+    public function calcolaIndiceFonte()
     {
-        $firstResult = (new \yii\db\Query())
+        $news = (new \yii\db\Query())
             ->select(['indice_attendibilita'])
             ->from('notizia')
-            ->join('INNER JOIN', 'fonte', 'fonte = id_fonte')
+            ->where(['fonte' => $this->id_fonte])
             ->all();
-
-        $secondResult = (new \yii\db\Query())
-        ->select(['id_fonte'])
-        ->from('fonte')
-        ->join('INNER JOIN', 'notizia', 'fonte = id_fonte')
-        ->one();
 
         $sum = 0;
         $i = 0;
 
-        foreach($firstResult as $row):
+        foreach($news as $row):
             foreach($row as $r):
                 $sum += $r;
                 $i++;
             endforeach;
         endforeach;
 
-        $toPass;
-
-        foreach($secondResult as $row):
-            $toPass = $row;
-        endforeach;
-
         $media = $sum / $i;
 
-        Yii::$app->db->createCommand()
-          ->update('fonte', ['indice_fonte' => round($media, 0)], ['id_fonte' => $toPass])
-          ->execute();
-        
+        $this->indice_fonte = round($media, 0);
+        $this->update();
     }
 }
