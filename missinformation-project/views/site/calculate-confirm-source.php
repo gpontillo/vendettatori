@@ -7,6 +7,7 @@ use app\models\Fonte;
 
 
 <?php if(($font == null) || ($font2 == null)): ?>
+    <script src="<?php echo Yii::app()->request->baseUrl; ?>/js/panel.js"></script>
 
     <div class="jumbotron text-center bg-transparent">
         <?php
@@ -65,7 +66,20 @@ use app\models\Fonte;
                     ?>   
             </div>
         </div>
-        <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary']) ?>
+        <button id="toggleButton" class="btn btn-outline-secondary" type="button" onclick="toggleSource(<?= $font->id_fonte ?>)">Block Source</button>
+        <script>
+            function getCookie(name) {
+                let matches = document.cookie.match(new RegExp(
+                    "(?:^|; )" + name.replace(/([\.$?*|{}\(\)\[\]\\\/\+^])/g, '\\$1') + "=([^;]*)"
+                ));
+                return matches ? decodeURIComponent(matches[1]) : undefined;
+            }
+
+            let button = document.getElementById('toggleButton');
+            if (button) {
+                button.textContent = (getCookie(<?= $font->id_fonte ?> + '-source') === "true" ? true : false) ? "Unblock Source" : "Block Source";
+            }
+        </script>
     </div>
 </div>
 <?php endif;?>

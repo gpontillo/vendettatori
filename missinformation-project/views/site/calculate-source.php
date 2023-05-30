@@ -2,7 +2,6 @@
 
 use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
-use yii\model\Categoria;
 use yii\model\Notizia;
 use app\models\Fonte;
 
@@ -34,7 +33,7 @@ use app\models\Fonte;
             <?= $form->field($model, 'source') ?>
             <div class="form-group">
                 <div class="col-lg-11 mt-2">
-                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary']) ?>
+                    <?= Html::submitButton('Submit', ['class' => 'btn btn-primary', 'style' => 'margin-left: -12px']) ?>
                 </div>
             </div>
             <?php ActiveForm::end(); ?>

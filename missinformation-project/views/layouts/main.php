@@ -46,7 +46,7 @@ $this->registerLinkTag(['rel' => 'icon', 'type' => 'image/x-icon', 'href' => Yii
             ['label' => 'Search News', 'url' => ['/site/calculate']],
             ['label' => 'Search Sources', 'url' => ['/site/calculate-source']],
             Yii::$app->user->isGuest
-                ? ['label' => 'Moderator Area', 'url' => ['/segnalazioni/login']]
+                ? ['label' => 'Moderator Login', 'url' => ['/segnalazioni/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
@@ -69,9 +69,9 @@ else:
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav'],
         'items' => [
-            
+            ['label' => 'Reports Area', 'url' => ['/segnalazioni/index']],
             Yii::$app->user->isGuest
-                ? ['label' => 'Moderator Area', 'url' => ['/segnalazioni/login']]
+                ? ['label' => 'Moderator Login', 'url' => ['/segnalazioni/login']]
                 : '<li class="nav-item">'
                     . Html::beginForm(['/site/logout'])
                     . Html::submitButton(
@@ -91,7 +91,7 @@ endif;
 <main id="main" class="flex-shrink-0" role="main">
     <div class="container">
         <?php if (!empty($this->params['breadcrumbs'])): ?>
-            <?=  Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
+            <?php  Breadcrumbs::widget(['links' => $this->params['breadcrumbs']]) ?>
         <?php endif; ?>
         <?= Alert::widget() ?>
         <?= $content ?>

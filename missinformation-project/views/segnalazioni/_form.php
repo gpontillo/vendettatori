@@ -37,7 +37,8 @@ use yii\bootstrap5\ActiveForm;
 
     <div class="form-group">
         <div class="col-lg-11 mt-2">
-            <?= Html::submitButton('Save your verdict', ['class' => 'btn btn-success']) ?>
+            <?= Html::submitButton('Save your verdict', ['class' => 'btn btn-success', 'style' => 'margin-left: -12px']) ?>
+            <?= Html::a('Go back', ['view', 'id' => $model->id], ['class' => 'btn btn-danger']) ?>
         </div>
     </div>
 

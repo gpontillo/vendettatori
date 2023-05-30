@@ -5,6 +5,7 @@ use yii\helpers\Html;
 use yii\helpers\Url;
 use yii\grid\ActionColumn;
 use yii\grid\GridView;
+use yii\bootstrap5\Breadcrumbs;
 
 /** @var yii\web\View $this */
 /** @var app\models\SegnalazioniSearch $searchModel */
@@ -13,7 +14,6 @@ use yii\grid\GridView;
 $this->title = 'Users\' reports';
 
 ?>
-
 
 <div class="segnalazioni-index">
 
