@@ -20,9 +20,29 @@ function toggleSource(id) {
     let button = document.getElementById('toggleButton');
     if (button) {
         button.textContent = value ? "Unblock Source" : "Block Source";
+       
     }
 }
 
 function seeCookie(id) {
     console.log(getCookie(id) === "true" ? true : false);
+}
+
+function hideSource(id) 
+{
+    let cookieValue = getCookie(id + '-source') === "true" ? true : false;
+    
+    while(cookieValue == true)
+    {
+        if(confirm("The source is blocked, Unblocked it with Si, otherwhise you will be redirect with no") == true)
+        {
+            setCookie(id + '-source', value + "");
+        }
+        else
+        {
+            window.location.replace("http://localhost:8080/index.php?r=site%2Fcalculate-source");
+        }
+    }
+    
+    
 }

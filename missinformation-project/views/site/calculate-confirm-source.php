@@ -19,7 +19,7 @@ use app\models\Fonte;
 <?php $indice_attendibilita = $font->indice_fonte; ?>
 <div class="site-index">
     <h1>Infos:</h1>
-    <div class="jumbotron text-center bg-transparent">
+    <div id="source" class="jumbotron text-center bg-transparent">
         <?php
         if ($indice_attendibilita  >= 50) {
             echo '<h1 class="display-4">The source is affidable!</h1>';
@@ -66,7 +66,7 @@ use app\models\Fonte;
                     ?>   
             </div>
         </div>
-        <button id="toggleButton" class="btn btn-outline-secondary" type="button" onclick="toggleSource(<?= $font->id_fonte ?>)">Block Source</button>
+        <button id="toggleButton" class="btn btn-outline-secondary" type="button" onclick="toggleSource(<?= $font->id_fonte ?>); hideSource(<?= $font->id_fonte ?>)">Block Source</button>
         <script>
             function getCookie(name) {
                 let matches = document.cookie.match(new RegExp(
@@ -79,6 +79,7 @@ use app\models\Fonte;
             if (button) {
                 button.textContent = (getCookie(<?= $font->id_fonte ?> + '-source') === "true" ? true : false) ? "Unblock Source" : "Block Source";
             }
+
         </script>
     </div>
 </div>
