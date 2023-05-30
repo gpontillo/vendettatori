@@ -85,7 +85,8 @@ class Notizia extends \yii\db\ActiveRecord
         return $this->hasOne(Fonte::class, ['id_fonte' => 'fonte']);
     }
 
-    private static function filterEntities($entities, int $mode = 0): string {
+    private static function filterEntities($entities, int $mode = 0): string
+    {
         /* values of mode:
             - '0' : all subjects
             - '1' : remove locations
@@ -94,24 +95,25 @@ class Notizia extends \yii\db\ActiveRecord
         $list_entities = "";
 
         foreach ($entities as $entity) {
-            if($mode == 0 || ($mode == 1 && $entity['type'] != 'LOC') || ($mode == 2 && $entity['type'] == 'LOC')) {
-                $list_entities = $list_entities.$entity['name'].';';
+            if ($mode == 0 || ($mode == 1 && $entity['type'] != 'LOC') || ($mode == 2 && $entity['type'] == 'LOC')) {
+                $list_entities = $list_entities . $entity['name'] . ';';
             }
         }
 
         $list_entities2 = substr($list_entities, 0, -1);
-        if($list_entities2 != false)
+        if ($list_entities2 != false)
             $list_entities = $list_entities2;
 
         return $list_entities;
     }
 
-    private static function findFonte($url) {
+    private static function findFonte($url)
+    {
         $scomposedUrl = parse_url($url);
-        $composedUrl = $scomposedUrl['scheme'].'://'.$scomposedUrl['host'];
+        $composedUrl = $scomposedUrl['scheme'] . '://' . $scomposedUrl['host'];
 
         $id_fonte = Fonte::find()->select(['id_fonte'])->where(['link_fonte' => $composedUrl])->one();
-        if($id_fonte !== null)
+        if ($id_fonte !== null)
             return $id_fonte;
         else {
             $newFonte = new Fonte();
@@ -128,26 +130,28 @@ class Notizia extends \yii\db\ActiveRecord
         }
     }
 
-    public static function calculateNotizia(string $url) {
+    public static function calculateNotizia(string $url)
+    {
         $client = new FactCheckToolsController();
         $response = $client->search($url);
         if ($response->isOk) {
-            $claim = $response->data['claims'][0];
-            if($claim) {
-                $notizia = Notizia::generateNotizia($url);
-                $notizia->indice_attendibilita = 0;
-                $notizia->from_api = 1;
-                if(!$notizia->save()) {
-                    throw new Exception("Error on save");
-                };
-                return $notizia;
+            $notizia = Notizia::generateNotizia($url);
+            if (array_key_exists('claims',$response->data)) {
+                $claim = $response->data['claims'][0];
+                if ($claim) {
+                    $notizia->indice_attendibilita = 0;
+                    $notizia->from_api = 1;
+                }
             }
-        }
-        else {
+            if (!$notizia->save()) {
+                throw new Exception("Error on save");
+            };
+            return $notizia;
+        } else {
             throw new Exception($response);
         }
-        return null;
     }
+
 
 
     public function CalcolaNotizia($url)
@@ -169,8 +173,8 @@ class Notizia extends \yii\db\ActiveRecord
 
     }
 
-
-    public static function generateNotizia(string $url): Notizia{
+    public static function generateNotizia(string $url): Notizia
+    {
         $client = new WorldNewsController();
         $response = $client->extract($url);
         if ($response->isOk) {
@@ -190,8 +194,7 @@ class Notizia extends \yii\db\ActiveRecord
             $notizia->indice_attendibilita = -1;
             $notizia->luogo = Notizia::filterEntities($response->data["entities"], 2);
             $notizia->from_api = 0;
-        }
-        else {
+        } else {
             throw new Exception($response);
         }
         return $notizia;

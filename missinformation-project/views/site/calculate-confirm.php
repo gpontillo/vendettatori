@@ -10,23 +10,23 @@ $dataAccaduto = $news->data_accaduto;
 $fonte = $news->getFonte0()->one()->link_fonte;
 ?>
 <div class="site-index">
-    <?php
-    //da controllare il cockie
-    
-    
-    ?>
     <div class="jumbotron text-center bg-transparent">
         <?php
         if ($indice_attendibilita >= 50) {
             echo '<h1 class="display-4">The article is affidable!</h1>';
             echo '<p class="lead">You can trust this article because it has an affidability index of ', $indice_attendibilita, '</p>';
-        } else {
+        } else if($indice_attendibilita === -1) {
+            echo '<h1 class="display-4">The article is not yet calculated!</h1>';
+            echo '<p class="lead">We are sorry for the inconvinience but one of our moderator is still reviewing this article</p>';
+        }
+        else {
             echo '<h1 class="display-4">The article is NOT affidable!</h1>';
             echo '<p class="lead">This article is not affidable because it has an affidability index of ', $indice_attendibilita, '</p>';
         }
         ?>
     </div>
-
+    
+    <?php if($indice_attendibilita != -1): ?>
     <div class="body-content">
         <div class="row">
             <div class="col-lg-12">
@@ -77,10 +77,11 @@ $fonte = $news->getFonte0()->one()->link_fonte;
                     }
                     ?>
                 </ul>
-                <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => 0], ['class' => 'btn btn-outline-secondary']) ?>
+                <?= Html::a('Check similar articles', ['/site/similar-articles', 'argument' => $news->argomento], ['class' => 'btn btn-outline-secondary']) ?>
                 <?= Html::button('Block source', ['class' => 'btn btn-outline-secondary', 'name' => 'Block']) ?>
                 <?= Html::a('Report article', ['/site/report-article', 'url' => $news->link, 'id' => $news->id], ['class' => 'btn btn-outline-secondary']) ?>
             </div>
         </div>
     </div>
+    <?php endif; ?>
 </div>

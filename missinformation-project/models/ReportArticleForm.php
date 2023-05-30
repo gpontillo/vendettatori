@@ -10,7 +10,7 @@ class ReportArticleForm extends Model
     public $url;
     public $motive;
     public $review;
-    public $is_already_in_db = false;
+    public $id_notizia;
 
     public function rules()
     {

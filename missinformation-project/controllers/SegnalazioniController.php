@@ -61,7 +61,7 @@ class SegnalazioniController extends Controller
         $news = null;
         $report = $this->findModel($id);
 
-        $news = Notizia::find()->where(['link' => $report->url])->one();
+        $news = Notizia::find()->where(['id' => $report->id_notizia])->one();
 
         return $this->render('view', [
             'model' => $report,

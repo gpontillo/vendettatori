@@ -12,6 +12,9 @@ use Yii;
  * @property string $motivo
  * @property int $valutazione
  * @property int $esito
+ * @property int|null $id_notizia
+ *
+ * @property Notizia $notizia
  */
 class Segnalazioni extends \yii\db\ActiveRecord
 {
@@ -43,11 +46,12 @@ class Segnalazioni extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['id', 'url', 'motivo', 'valutazione'], 'required'],
-            [['id', 'valutazione', 'esito'], 'integer'],
+            [['id', 'url', 'motivo'], 'required'],
+            [['id', 'valutazione', 'esito', 'id_notizia'], 'integer'],
             [['url'], 'string', 'max' => 255],
             [['motivo'], 'string', 'max' => 500],
             [['id'], 'unique'],
+            [['id_notizia'], 'exist', 'skipOnError' => true, 'targetClass' => Notizia::class, 'targetAttribute' => ['id_notizia' => 'id']],
         ];
     }
 
@@ -61,8 +65,19 @@ class Segnalazioni extends \yii\db\ActiveRecord
             'url' => 'Url',
             'motivo' => 'Motivo',
             'valutazione' => 'Valutazione',
-            'esito' => 'Esito'
+            'esito' => 'Esito',
+            'id_notizia' => 'Id Notizia',
         ];
+    }
+
+    /**
+     * Gets query for [[Notizia]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getNotizia()
+    {
+        return $this->hasOne(Notizia::class, ['id' => 'id_notizia']);
     }
 
     public static function getValutazione(int $valutazione): string

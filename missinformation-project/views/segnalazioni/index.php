@@ -49,6 +49,7 @@ $this->title = 'Users\' reports';
                 },
                 'filter'=>Segnalazioni::ESITO_ARRAY,
             ],
+            'id_notizia',
             [
                 'class' => ActionColumn::className(),
                 'urlCreator' => function ($action, Segnalazioni $model, $key, $index, $column) {
