@@ -10,6 +10,7 @@ use yii\helpers\Html;
             <?php
                 $i = 1;
                 foreach($list_news as $news) {
+                    $fonte = $news->getFonte0()->one()->link_fonte;
                     echo '
                     <div class="accordion-item">
                         <h2 class="accordion-header">
@@ -19,7 +20,15 @@ use yii\helpers\Html;
                         </h2>
                         <div id="collapse',$i,'" class="accordion-collapse collapse">
                             <div class="accordion-body">
-                                ',Html::a("Link notizia", $news->link, ['target'=>'_blank']),'
+                                <ul>
+                                    <li>Subjects involved: '.(empty($news->coinvolgimento)? 'None' : $news->coinvolgimento).'</li>
+                                    <li>Arguments: '.$news->argomento.'</li>
+                                    <li>Publishing date: '.$news->data_pubblicazione.'</li>
+                                    <li>Event date: '.$news->data_accaduto.'</li>
+                                    <li>Event place(s): '.$news->luogo.'</li>
+                                    <li>Source: '.$fonte.'</li>
+                                    <li>Link: ',Html::a($news->link, $news->link, ['target'=>'_blank']),'</li>
+                                </ul>
                             </div>
                         </div>
                     </div>

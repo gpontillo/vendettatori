@@ -85,8 +85,6 @@ class SiteController extends Controller
 
         $model = new LoginForm();
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
-
-    
         }
 
         $model->password = '';
@@ -151,15 +149,22 @@ class SiteController extends Controller
 
             if ($query == null) {
                 $news1 = Notizia::calculateNotizia($model->url);
-                if($news1->indice_attendibilita === -1) {
+                if ($news1->indice_attendibilita === -1) {
                     $this->redirect(['report-article', 'url' => $model->url, 'id' => $news1->id]);
                 }
-            }
-            else
+            } else
                 $news1 = $query;
-            if($news1 != null){
-                if($news1->indice_attendibilita != -1)
-                    $news2 = Notizia::find()->where(['>', 'indice_attendibilita', 50])->andWhere(['like', 'argomento', '%'.str_replace(Notizia::separatorSoggetti,'%',$news1->argomento).'%'])->one();  
+            if ($news1 != null) {
+                if ($news1->indice_attendibilita != -1) {
+                    $query2 = Notizia::find()->where(['>', 'indice_attendibilita', 50]);
+                    $query2->andWhere(['<>', 'id', $news1->id]);
+                    $arguments = [];
+                    foreach (explode(Notizia::separatorSoggetti, $news1->argomento) as $soggetto) {
+                        array_push($arguments, '%' . $soggetto . '%');
+                    }
+                    $query2->andWhere(['or like', 'argomento', $arguments, false]);
+                    $news2 = $query2->one();
+                }
                 return $this->render('calculate-confirm', [
                     'news' => $news1,
                     'news2' => $news2,
@@ -173,14 +178,16 @@ class SiteController extends Controller
 
     public function actionCalculateSource()
     {
-        $fonte = new Fonte();
-        $fonte->FonteCalcolata();
-
         $modelSource = new CalculateSourceForm();
 
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) {
             $query = Fonte::find()->where(['descrizione_fonte' => $modelSource->source])->one();
-            $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
+            $query2 = null;
+            
+            if($query != null) {
+                $query->calcolaIndiceFonte();
+                $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
+            }
 
             return $this->render('calculate-confirm-source', [
                 'font' => $query,
@@ -198,9 +205,15 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionSimilarArticles($argument)
+    public function actionSimilarArticles($id, $argument)
     {
-        $list_news = Notizia::find()->where(['like', 'argomento', str_replace(Notizia::separatorSoggetti,'%',$argument)])->orderBy(['indice_attendibilita' => SORT_ASC])->all();
+        $query2 = Notizia::find()->where(['<>', 'id', $id]);
+        $arguments = [];
+        foreach (explode('_', $argument) as $soggetto) {
+            array_push($arguments, '%' . $soggetto . '%');
+        }
+        $query2->andWhere(['or like', 'argomento', $arguments, false]);
+        $list_news = $query2->all();
         return $this->render('similar-articles', ['list_news' => $list_news]);
     }
 
@@ -238,6 +251,4 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
-
-
 }

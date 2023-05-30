@@ -8,7 +8,7 @@ use yii\bootstrap5\ActiveForm;
     <h3>Report news</h3>
     <p>
         Compile this form to give us the information to review your report about this news. Thank you for your time!
-        (If you searched for a news and you see thi page, it means that the news that you searched is not in our db)
+        (If you searched for a news and you see this page, it means that the news that you searched is not in our db)
     </p>
     <h4>Report news form</h4>
 
