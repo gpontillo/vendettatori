@@ -105,6 +105,35 @@ class SegnalazioniController extends Controller
         $model = $this->findModel($id);
 
         if ($this->request->isPost && $model->load($this->request->post()) && $model->save()) {
+
+            $queryUrl = (new \yii\db\Query())
+                          ->select(['link'])
+                          ->from('notizia')
+                          ->join('INNER JOIN', 'segnalazioni', ['id_notizia' => $model->id_notizia])
+                          ->one();
+
+            $queryApi = (new \yii\db\Query())
+                      ->select(['from_api'])
+                      ->from('notizia')
+                      ->join('INNER JOIN', 'segnalazioni', ['id_notizia' => $model->id_notizia])
+                      ->one();
+            
+            $url = null;
+            $api = null;
+
+            foreach($queryUrl as $u):
+                $url = $u;
+            endforeach;
+
+            foreach($queryApi as $a):
+                $api = $a;
+            endforeach;
+
+            $news = new Notizia();
+
+            $news->secondCalculateNotizia($url, $api);
+            
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use DeepCopy\Filter\KeepFilter;
 use Exception;
 use Yii;
 use yii\httpclient\Client;
@@ -155,12 +156,13 @@ class Notizia extends \yii\db\ActiveRecord
 
 
 
-    public function CalcolaNotizia($url)
+    public function secondCalculateNotizia($url, $api)
     {
        
         $reports = Segnalazioni::find()
                                 ->where(['like', 'url', $url . '%', false])
                                 ->all();
+
 
         $countNegative = 0;
         $countPositive = 0;
@@ -168,9 +170,18 @@ class Notizia extends \yii\db\ActiveRecord
         foreach($reports as $report):
             if($report->esito == 1) $countPositive++;
             else if($report->esito == -1) $countNegative++;
+            else if($api == true) $countNegative++;
         endforeach;
 
 
+        $index = 50 + ($countPositive * 10) - ($countNegative * 10);
+
+        if($index > 100) $index = 100;
+        else if($index < 0) $index = 0;
+
+        Yii::$app->db->createCommand()
+          ->update('notizia', ['indice_attendibilita' => $index], ['link' => $url])
+          ->execute();
 
     }
 

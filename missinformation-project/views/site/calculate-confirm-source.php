@@ -7,7 +7,7 @@ use app\models\Fonte;
 <script src="<?php echo Yii::$app->request->baseUrl; ?>/js/panel.js"></script>
 
 
-<?php if(($font == null) && ($font2 == null)): ?>
+<?php if($font == null): ?>
 
 
     <div class="jumbotron text-center bg-transparent">
