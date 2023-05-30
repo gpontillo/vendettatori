@@ -145,20 +145,21 @@ class SiteController extends Controller
         $model = new CalculateForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            // ricerca su db dell'url
-
             $query = Notizia::find()->where(['link' => $model->url])->one();
             $news1 = null;
             $news2 = null;
 
-            if (!$query) {
+            if ($query == null) {
                 $news1 = Notizia::calculateNotizia($model->url);
-                if(!$news1) {
-                    $this->redirect(['report-article', 'url' => $model->url]);
+                if($news1->indice_attendibilita === -1) {
+                    $this->redirect(['report-article', 'url' => $model->url, 'id' => $news1->id]);
                 }
             }
-            if($news1){
-                $news2 = Notizia::find()->where(['>', 'indice_attendibilita', 50])->one();  
+            else
+                $news1 = $query;
+            if($news1 != null){
+                if($news1->indice_attendibilita != -1)
+                    $news2 = Notizia::find()->where(['>', 'indice_attendibilita', 50])->andWhere(['like', 'argomento', '%'.str_replace(Notizia::separatorSoggetti,'%',$news1->argomento).'%'])->one();  
                 return $this->render('calculate-confirm', [
                     'news' => $news1,
                     'news2' => $news2,
@@ -199,7 +200,7 @@ class SiteController extends Controller
      */
     public function actionSimilarArticles($argument)
     {
-        $list_news = [];//Notizia::find()->where(['tipo_categoria' => $argument])->orderBy(['indice_attendibilita' => SORT_ASC])->all();
+        $list_news = Notizia::find()->where(['like', 'argomento', str_replace(Notizia::separatorSoggetti,'%',$argument)])->orderBy(['indice_attendibilita' => SORT_ASC])->all();
         return $this->render('similar-articles', ['list_news' => $list_news]);
     }
 
@@ -212,10 +213,9 @@ class SiteController extends Controller
     {
         $model = new ReportArticleForm();
         $model->url = Yii::$app->request->get('url');
-        $model->is_already_in_db = Yii::$app->request->get('id') != null;
+        $model->id_notizia = Yii::$app->request->get('id');
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-
             $segnalazione = new Segnalazioni();
             $id = Segnalazioni::find()->max('id');
             if ($id == null)
@@ -226,6 +226,7 @@ class SiteController extends Controller
             $segnalazione->url = $model->url;
             $segnalazione->motivo = $model->motive;
             $segnalazione->valutazione = $model->review;
+            $segnalazione->id_notizia = $model->id_notizia;
             $segnalazione->save();
 
             return $this->redirect([

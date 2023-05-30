@@ -17,7 +17,7 @@ class SegnalazioniSearch extends Segnalazioni
     public function rules()
     {
         return [
-            [['id', 'valutazione', 'esito'], 'integer'],
+            [['id', 'valutazione', 'esito', 'id_notizia'], 'integer'],
             [['url', 'motivo'], 'safe'],
         ];
     }
