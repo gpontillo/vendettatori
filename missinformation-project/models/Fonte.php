@@ -85,7 +85,7 @@ class Fonte extends \yii\db\ActiveRecord
             endforeach;
         endforeach;
 
-        $toPass;
+        $toPass = null;
 
         foreach($secondResult as $row):
             $toPass = $row;

@@ -5,6 +5,7 @@ namespace app\models;
 use Exception;
 use Yii;
 use yii\httpclient\Client;
+use app\models\Segnalazioni;
 
 /**
  * This is the model class for table "notizia".
@@ -117,5 +118,29 @@ class Notizia extends \yii\db\ActiveRecord
         }
         throw new Exception($response);
         return null;
+    }
+
+
+    public function CalcolaNotizia($url)
+    {
+       
+         $reports = Segnalazioni::find()->where(['like', 'url', $url . '%', false]);
+
+         $countNegative = 0;
+         $countPositive = 0;
+
+        foreach($reports as $report):
+            if($report->esito == 1) 
+            {
+                $countPositive++;
+            } 
+            else if($report->esito == -1)
+                 {
+                    $countNegative++;
+                 }
+        endforeach;
+
+            
+
     }
 }
