@@ -43,7 +43,7 @@ use app\models\Fonte;
                         <table class="table">
                             <thead>
                                 <tr>
-                                    <th scope="col">Source Description</th>
+                                    <th scope="col">Source Name</th>
                                     <th scope="col">Reliability Index</th>
                                     <th scope="col">Source Link</th>
                                 </tr>
@@ -51,7 +51,7 @@ use app\models\Fonte;
                             <tbody>
                             <?php foreach($font2 as $ft2):?>
                                 <tr>
-                                    <td><?=$ft2->descrizione_fonte ?></td>
+                                    <td><?=$ft2->nome_fonte ?></td>
                                     <td><?=$ft2->indice_fonte ?></td>
                                     <td><?= Html::a(Html::encode($ft2->link_fonte), $ft2->link_fonte, ['target'=>'_blank'])?></td>
                                 </tr>

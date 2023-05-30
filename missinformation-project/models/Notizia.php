@@ -148,7 +148,7 @@ class Notizia extends \yii\db\ActiveRecord
                 $newFonte->id_fonte = 1;
             else
                 $newFonte->id_fonte++;
-            $newFonte->descrizione_fonte = $scomposedUrl['host'];
+            $newFonte->nome_fonte = $scomposedUrl['host'];
             $newFonte->link_fonte = $composedUrl;
             $newFonte->indice_fonte = 0;
             $newFonte->save();

@@ -4,7 +4,7 @@ USE missinformationProject;
 
 CREATE TABLE IF NOT EXISTS fonte(
     id_fonte INT(10) PRIMARY KEY NOT NULL,
-    descrizione_fonte VARCHAR(500) NOT NULL,
+    nome_fonte VARCHAR(255) NOT NULL,
     link_fonte VARCHAR(255) NOT NULL,
     indice_fonte INT(10) NOT NULL
 );
