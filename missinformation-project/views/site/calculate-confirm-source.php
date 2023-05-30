@@ -67,7 +67,6 @@ use app\models\Fonte;
             </div>
         </div>
         <button id="toggleButton" class="btn btn-outline-secondary" type="button" onclick="toggleSource(<?= $font->id_fonte ?>)">Block Source</button>
-        <button class="btn btn-outline-secondary" type="button" onclick="seeCookie(<?= $font->id_fonte ?> + '-source')">see</button>
         <script>
             function getCookie(name) {
                 let matches = document.cookie.match(new RegExp(
