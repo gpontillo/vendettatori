@@ -69,14 +69,6 @@ class Fonte extends \yii\db\ActiveRecord
             ->where(['fonte' => $this->id_fonte])
             ->all();
 
-
-        $secondResult = (new \yii\db\Query())
-        ->select(['id_fonte'])
-        ->from('fonte')
-        ->join('INNER JOIN', 'notizia', 'fonte = id_fonte')
-        ->all();
-
-
         $sum = 0;
         $i = 0;
 
@@ -86,16 +78,6 @@ class Fonte extends \yii\db\ActiveRecord
                 $i++;
             endforeach;
         endforeach;
-
-
-        $toPass = null;
-
-        foreach($secondResult as $row):
-            $toPass = $row;
-        endforeach;
-
-        if($i == 0) $media = 0;
-        else $media = $sum / $i;
 
         $media = $sum / $i;
 

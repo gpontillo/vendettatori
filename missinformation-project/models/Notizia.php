@@ -86,6 +86,31 @@ class Notizia extends \yii\db\ActiveRecord
         return $this->hasOne(Fonte::class, ['id_fonte' => 'fonte']);
     }
 
+    public function recalculateIndiceAttendibilita()
+    {
+        $reports = Segnalazioni::find()->where(['id_notizia' => $this->id, 'esito' => 1])->all();
+
+        $index = 0;
+        $total = 0;
+
+        foreach($reports as $report):
+            $index += $report->valutazione;
+            $total++;
+        endforeach;
+
+        // if from api, it means it has +1 negative review because the api tells us when they are fake news
+        if($this->from_api == 1)
+            $total++;
+
+        $index = round($index / $total);
+
+        if($index > 100) $index = 100;
+        else if($index < 0) $index = 0;
+
+        $this->indice_attendibilita = $index;
+        $this->update();
+    }
+
     private static function filterEntities($entities, int $mode = 0): string
     {
         /* values of mode:
@@ -152,37 +177,6 @@ class Notizia extends \yii\db\ActiveRecord
         } else {
             throw new Exception($response);
         }
-    }
-
-
-
-    public function secondCalculateNotizia($url, $api)
-    {
-       
-        $reports = Segnalazioni::find()
-                                ->where(['like', 'url', $url . '%', false])
-                                ->all();
-
-
-        $countNegative = 0;
-        $countPositive = 0;
-
-        foreach($reports as $report):
-            if($report->esito == 1) $countPositive++;
-            else if($report->esito == -1) $countNegative++;
-            else if($api == true) $countNegative++;
-        endforeach;
-
-
-        $index = 50 + ($countPositive * 10) - ($countNegative * 10);
-
-        if($index > 100) $index = 100;
-        else if($index < 0) $index = 0;
-
-        Yii::$app->db->createCommand()
-          ->update('notizia', ['indice_attendibilita' => $index], ['link' => $url])
-          ->execute();
-
     }
 
     public static function generateNotizia(string $url): Notizia
