@@ -7,7 +7,7 @@ $indice_attendibilita = $news->indice_attendibilita;
 $soggetti = empty($news->coinvolgimento) ? [] : explode(Notizia::separatorSoggetti, $news->coinvolgimento);
 $dataPubblicazione = $news->data_pubblicazione;
 $dataAccaduto = $news->data_accaduto;
-$fonte = $news->getFonte0()->one()->link_fonte;
+$fonte = $news->getFonte0()->one()->nome_fonte;
 ?>
 <script src="<?php echo Yii::$app->request->baseUrl; ?>/js/panel.js"></script>
 <div id="alertblock" class="alert alert-warning d-flex align-items-center" role="alert" style="display: none !important;">
