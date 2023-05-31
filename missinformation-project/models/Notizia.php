@@ -192,7 +192,10 @@ class Notizia extends \yii\db\ActiveRecord
                 $notizia->id++;
             $notizia->link = $url;
             $notizia->descrizione_notizia = $response->data['title'];
-            $notizia->argomento = Notizia::filterEntities($response->data["entities"] ?? [], 0);
+            $argomento = Notizia::filterEntities($response->data["entities"] ?? [], 0);
+            if(empty($argomento))
+                $argomento = "NotCalculable";
+            $notizia->argomento = $argomento;
             $notizia->fonte = Notizia::findFonte($url);
             $notizia->data_pubblicazione = $response->data['publish_date'] ?? date("Y-m-d");
             $notizia->data_accaduto = $response->data['publish_date'] ?? date("Y-m-d");

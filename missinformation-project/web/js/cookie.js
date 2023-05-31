@@ -13,7 +13,7 @@ function setCookie(cName, cValue, expDays = 30) {
 }
 
 function toggleSource(id) {
-    let oldValue = getCookie(id + '-source') === "true" ? true : false;
+    let oldValue = getCookie(id + '-source') === "true";
     let value = !oldValue;
     console.log(value, oldValue, typeof value, typeof oldValue);
     setCookie(id + '-source', value + "");
@@ -24,5 +24,13 @@ function toggleSource(id) {
 }
 
 function seeCookie(id) {
-    console.log(getCookie(id) === "true" ? true : false);
+    console.log(getCookie(id) === "true");
+}
+
+function unblockForNews(id) {
+    setCookie(id + '-source', "false");
+    let newsPage = document.getElementById('newsdiv');
+    let alertBlock = document.getElementById('alertblock');
+    alertBlock.style="display: none !important;";
+    newsPage.style="display: block !important;";
 }
