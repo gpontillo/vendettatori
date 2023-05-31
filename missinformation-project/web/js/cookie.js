@@ -20,6 +20,7 @@ function toggleSource(id) {
     let button = document.getElementById('toggleButton');
     if (button) {
         button.textContent = value ? "Unblock Source" : "Block Source";
+       
     }
 }
 
