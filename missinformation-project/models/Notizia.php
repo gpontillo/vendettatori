@@ -50,7 +50,7 @@ class Notizia extends \yii\db\ActiveRecord
             [['data_pubblicazione', 'data_accaduto'], 'safe'],
             [['link'], 'string', 'max' => 2600],
             [['descrizione_notizia', 'argomento', 'coinvolgimento'], 'string', 'max' => 255],
-            [['luogo'], 'string', 'max' => 20],
+            [['luogo'], 'string', 'max' => 255],
             [['id'], 'unique'],
             [['fonte'], 'exist', 'skipOnError' => true, 'targetClass' => Fonte::class, 'targetAttribute' => ['fonte' => 'id_fonte']],
         ];
