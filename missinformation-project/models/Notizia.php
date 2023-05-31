@@ -138,9 +138,9 @@ class Notizia extends \yii\db\ActiveRecord
         $scomposedUrl = parse_url($url);
         $composedUrl = $scomposedUrl['scheme'] . '://' . $scomposedUrl['host'];
 
-        $id_fonte = Fonte::find()->select(['id_fonte'])->where(['link_fonte' => $composedUrl])->one();
-        if ($id_fonte !== null)
-            return $id_fonte;
+        $fonte = Fonte::find()->where(['link_fonte' => $composedUrl])->one();
+        if ($fonte !== null)
+            return $fonte->id_fonte;
         else {
             $newFonte = new Fonte();
             $newFonte->id_fonte = Fonte::find()->max('id_fonte');
