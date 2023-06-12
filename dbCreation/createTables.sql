@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS segnalazioni(
     url VARCHAR(255) NOT NULL,
     motivo VARCHAR(500) NOT NULL,
     valutazione INT(10) NOT NULL DEFAULT 0,
+    media_path VARCHAR(255),
     esito INT(10) NOT NULL DEFAULT 0,
     id_notizia INT,
     FOREIGN KEY(id_notizia) REFERENCES notizia(id) ON DELETE

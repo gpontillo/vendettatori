@@ -97,6 +97,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                     </ul>
                     <?= Html::a('Check similar articles', ['/site/similar-articles', 'id' => $news->id, 'argument' => str_replace(Notizia::separatorSoggetti, '_', $news->argomento)], ['class' => 'btn btn-outline-secondary']) ?>
                     <?= Html::a('Report article', ['/site/report-article', 'url' => $news->link, 'id' => $news->id], ['class' => 'btn btn-outline-secondary']) ?>
+                    <?= Html::a('Report media for this article', ['/site/report-media', 'url' => $news->link, 'id' => $news->id], ['class' => 'btn btn-outline-secondary']) ?>
                 </div>
             </div>
         </div>
