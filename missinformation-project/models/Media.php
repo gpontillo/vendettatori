@@ -17,9 +17,9 @@ use Yii;
  */
 class Media extends \yii\db\ActiveRecord
 {
-    public const EXTENSIONS_IMAGE = [];
-    public const EXTENSIONS_AUDIO = [];
-    public const EXTENSIONS_VIDEO = [];
+    public const EXTENSIONS_IMAGE = ['jpg', 'jpeg', 'jpe', 'jif', 'jfif', 'jfi', 'png', 'gif', 'webp', 'svg', 'svgz'];
+    public const EXTENSIONS_AUDIO = ['3gp', 'aac', 'act', 'amr', 'awb', 'flac', 'gsm', 'm4a', 'm4b', 'mp3', 'mpc', 'raw', 'rf64', 'sln', 'tta', 'vox', 'wav', 'wv', 'webm', 'cda',];
+    public const EXTENSIONS_VIDEO = ['webm', 'mkv', 'flv', 'flv', 'vob', 'ogv', 'ogg', 'drc', 'gif', 'gifv', 'mng', 'avi', 'MTS', 'M2TS', 'TS', 'mov', 'qt', 'wmv', 'yuv', 'rm', 'rmvb', 'viv', 'asf', 'amv', 'mp4', 'm4p', 'm4v', 'mpg', 'mp2', 'mpeg', 'mpe', 'mpv', 'mpg', 'mpeg', 'm2v', 'm4v', 'svi', '3gp', '3g2', 'mxf', 'roq', 'nsv', 'flv', 'f4v', 'f4p', 'f4a', 'f4b'];
     /**
      * {@inheritdoc}
      */
