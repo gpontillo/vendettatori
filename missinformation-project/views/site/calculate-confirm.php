@@ -83,12 +83,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                 </div>
             </div>
             <div class="row" style="padding-bottom: 10px;">
-                <div class="col">
-                    <h3>About Media</h3>
-                    <?= Html::a('News Images', ["/site/images"], ['class' => 'btn btn-outline-secondary']) ?>
-                    <?= Html::a('News Audios', ["/site/audios"], ['class' => 'btn btn-outline-secondary']) ?>
-                    <?= Html::a('News Videos', ["/site/videos"], ['class' => 'btn btn-outline-secondary']) ?>
-                </div>
+
             </div>
             <div class="row">
                 <div class="col">

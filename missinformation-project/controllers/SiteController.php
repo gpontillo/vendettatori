@@ -256,25 +256,6 @@ class SiteController extends Controller
     }
 
 
-    public function actionImages()
-    {
-        return $this->render("images.php");
-    }
-
-    public function actionVideos()
-    {
-        return $this->render("videos.php");
-
-    }
-
-    public function actionAudio()
-    {
-        return $this->render("audios.php");
-
-    }
-
-
-
 
 
     /**
