@@ -3,6 +3,8 @@
 namespace app\models;
 
 use Yii;
+use app\models\Media;
+use app\models\MediaNotizia;
 
 /**
  * This is the model class for table "{{%media}}".
@@ -76,31 +78,50 @@ class Media extends \yii\db\ActiveRecord
     }
 
     //MOCKED
-    public function calculateIndice() {
+    public function calculateIndice()
+    {
         $this->indice_attendibilita = rand(0, 100);
     }
 
-    public static function isImage($estensione) {
+    public static function isImage($estensione)
+    {
         return in_array($estensione, Media::EXTENSIONS_IMAGE);
     }
 
-    public function isImageMedia() {
+    public function isImageMedia()
+    {
         return in_array($this->estensione, Media::EXTENSIONS_IMAGE);
     }
 
-    public static function isAudio($estensione) {
+    public static function isAudio($estensione)
+    {
         return in_array($estensione, Media::EXTENSIONS_AUDIO);
     }
-    
-    public function isAudioMedia() {
+
+    public function isAudioMedia()
+    {
         return in_array($this->estensione, Media::EXTENSIONS_AUDIO);
     }
 
-    public static function isVideo($estensione) {
+    public static function isVideo($estensione)
+    {
         return in_array($estensione, Media::EXTENSIONS_VIDEO);
     }
 
-    public function isVideoMedia() {
+    public function isVideoMedia()
+    {
         return in_array($this->estensione, Media::EXTENSIONS_VIDEO);
+    }
+
+    public function retriveMedia($id)
+    {
+        //inner join tra media_notizia e media con id notizia di media notizia = id
+
+        $query = Media::find()
+            ->innerJoinWith("media_notizia", "media_notizia.id_media = media.id")
+            ->andWhere(['media_notizia.id_media' => $id])
+            ->all();
+
+
     }
 }
