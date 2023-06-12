@@ -6,6 +6,8 @@ use Yii;
 use app\models\Segnalazioni;
 use app\models\LoginForm;
 use app\models\Notizia;
+use app\models\Media;
+use app\models\MediaNotizia;
 use app\models\SegnalazioniSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -45,7 +47,7 @@ class SegnalazioniController extends Controller
         $dataProvider = $searchModel->search($this->request->queryParams);
 
         return $this->render('index', [
-            'searchModel' => $searchModel, 
+            'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
         ]);
     }
@@ -81,7 +83,7 @@ class SegnalazioniController extends Controller
         if ($this->request->isPost) {
             if ($model->load($this->request->post()) && $model->save()) {
 
-                
+
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         } else {
@@ -156,7 +158,6 @@ class SegnalazioniController extends Controller
         if ($model->load(Yii::$app->request->post()) && $model->login()) {
 
             return $this->actionIndex();
-            
         }
 
         $model->password = '';
@@ -175,5 +176,41 @@ class SegnalazioniController extends Controller
         Yii::$app->user->logout();
 
         return $this->goHome();
+    }
+
+    /**
+     * accept the media.
+     */
+    public function actionAcceptMedia($id)
+    {
+        $model = $this->findModel($id);
+        $model->esito = 2;
+
+        if ($model->save()) {
+            $media = new Media();
+            $id = Media::find()->max('id');
+            if ($id == null)
+                $id = 1;
+            else
+                $id++;
+            $media->id = $id;
+            $media->calculateIndice();
+            $media->percorso = $model->media_path;
+            $media->estensione = pathinfo($model->media_path, PATHINFO_EXTENSION);
+
+            if ($media->save()) {
+                $media_notizia = new MediaNotizia();
+                $media_notizia->id_notizia = $model->id_notizia;
+                $media_notizia->id_media = $id;
+
+                if ($media_notizia->save()) {
+                    return $this->render('accept-media', [
+                        'model' => $model,
+                    ]);
+                }
+            }
+        }
+
+        return $this->redirect(['view', 'id' => $model->id]);
     }
 }

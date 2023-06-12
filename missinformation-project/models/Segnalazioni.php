@@ -13,12 +13,14 @@ use Yii;
  * @property int $valutazione
  * @property int $esito
  * @property int|null $id_notizia
+ * @property string|null $media_path
  *
  * @property Notizia $notizia
  */
 class Segnalazioni extends \yii\db\ActiveRecord
 {
     public const VALUTAZIONI_ARRAY = [
+        -1 => 'Media report', 
         0 => 'It\'s unreliable', 
         25 => 'It\'s mostly unrealible', 
         50 => 'I don\'t know', 
@@ -29,7 +31,14 @@ class Segnalazioni extends \yii\db\ActiveRecord
     public const ESITO_ARRAY = [
         0 => '-----',
         1 => 'Reliable',
-        -1 => 'Not reliable'
+        -1 => 'Not reliable',
+        2 => 'Media accepted'
+    ];
+
+    public const ESITO_REPORT_ARRAY = [
+        0 => '-----',
+        1 => 'Reliable',
+        -1 => 'Not reliable',
     ];
 
     /**
@@ -48,7 +57,7 @@ class Segnalazioni extends \yii\db\ActiveRecord
         return [
             [['id', 'url', 'motivo'], 'required'],
             [['id', 'valutazione', 'esito', 'id_notizia'], 'integer'],
-            [['url'], 'string', 'max' => 255],
+            [['url', 'media_path'], 'string', 'max' => 255],
             [['motivo'], 'string', 'max' => 500],
             [['id'], 'unique'],
             [['id_notizia'], 'exist', 'skipOnError' => true, 'targetClass' => Notizia::class, 'targetAttribute' => ['id_notizia' => 'id']],
@@ -67,6 +76,7 @@ class Segnalazioni extends \yii\db\ActiveRecord
             'valutazione' => 'Valutazione',
             'esito' => 'Esito',
             'id_notizia' => 'Id Notizia',
+            'media_path' => 'Media Path',
         ];
     }
 

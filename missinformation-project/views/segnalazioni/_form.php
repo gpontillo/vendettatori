@@ -32,7 +32,7 @@ use yii\bootstrap5\ActiveForm;
     ) ?>
 
     <?= $form->field($model, 'esito')->dropdownList(
-        Segnalazioni::ESITO_ARRAY
+        Segnalazioni::ESITO_REPORT_ARRAY
     ) ?>
 
     <div class="form-group">

@@ -14,9 +14,11 @@ use app\models\ReportArticleForm;
 use app\models\CalculateSourceForm;
 use app\models\Notizia;
 use app\models\Fonte;
+use app\models\ReportMediaForm;
 use app\models\Segnalazioni;
 use app\models\SegnalazioniSearch;
 use yii\web\Request;
+use yii\web\UploadedFile;
 
 class SiteController extends Controller
 {
@@ -218,7 +220,7 @@ class SiteController extends Controller
     }
 
     /**
-     * Displays report new article page.
+     * Displays report article page.
      *
      * @return Response|string
      */
@@ -239,6 +241,7 @@ class SiteController extends Controller
             $segnalazione->url = $model->url;
             $segnalazione->motivo = $model->motive;
             $segnalazione->valutazione = $model->review;
+            $segnalazione->media = null;
             $segnalazione->id_notizia = $model->id_notizia;
             $segnalazione->save();
 
@@ -251,6 +254,7 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
 
     public function actionImages()
     {
@@ -271,4 +275,44 @@ class SiteController extends Controller
 
 
 
+
+
+    /**
+     * Displays report media page.
+     *
+     * @return Response|string
+     */
+    public function actionReportMedia()
+    {
+        $model = new ReportMediaForm();
+        $model->url = Yii::$app->request->get('url');
+        $model->id_notizia = Yii::$app->request->get('id');
+
+        if ($model->load(Yii::$app->request->post())) {
+            $model->media = UploadedFile::getInstance($model, 'media');
+            if ($model->upload()) {
+                $segnalazione = new Segnalazioni();
+                $id = Segnalazioni::find()->max('id');
+                if ($id == null)
+                    $id = 1;
+                else
+                    $id++;
+                $segnalazione->id = $id;
+                $segnalazione->url = $model->url;
+                $segnalazione->motivo = $model->motive;
+                $segnalazione->valutazione = -1;
+                $segnalazione->media_path = $model->getMediaPath();
+                $segnalazione->id_notizia = $model->id_notizia;
+                $segnalazione->save();
+
+                return $this->redirect([
+                    'calculate',
+                    'success' => true
+                ]);
+            }
+        }
+        return $this->render('report-media', [
+            'model' => $model,
+        ]);
+    }
 }
