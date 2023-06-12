@@ -17,6 +17,9 @@ use Yii;
  */
 class Media extends \yii\db\ActiveRecord
 {
+    public const EXTENSIONS_IMAGE = [];
+    public const EXTENSIONS_AUDIO = [];
+    public const EXTENSIONS_VIDEO = [];
     /**
      * {@inheritdoc}
      */
@@ -75,5 +78,29 @@ class Media extends \yii\db\ActiveRecord
     //MOCKED
     public function calculateIndice() {
         $this->indice_attendibilita = rand(0, 100);
+    }
+
+    public static function isImage($estensione) {
+        return in_array($estensione, Media::EXTENSIONS_IMAGE);
+    }
+
+    public function isImageMedia() {
+        return in_array($this->estensione, Media::EXTENSIONS_IMAGE);
+    }
+
+    public static function isAudio($estensione) {
+        return in_array($estensione, Media::EXTENSIONS_AUDIO);
+    }
+    
+    public function isAudioMedia() {
+        return in_array($this->estensione, Media::EXTENSIONS_AUDIO);
+    }
+
+    public static function isVideo($estensione) {
+        return in_array($estensione, Media::EXTENSIONS_VIDEO);
+    }
+
+    public function isVideoMedia() {
+        return in_array($this->estensione, Media::EXTENSIONS_VIDEO);
     }
 }
