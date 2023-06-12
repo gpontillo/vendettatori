@@ -185,8 +185,8 @@ class SiteController extends Controller
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) {
             $query = Fonte::find()->where(['nome_fonte' => $modelSource->source])->one();
             $query2 = null;
-            
-            if($query != null) {
+
+            if ($query != null) {
                 $query->calcolaIndiceFonte();
                 $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
             }
@@ -255,6 +255,9 @@ class SiteController extends Controller
         ]);
     }
 
+
+
+
     /**
      * Displays report media page.
      *
@@ -282,7 +285,7 @@ class SiteController extends Controller
                 $segnalazione->media_path = $model->getMediaPath();
                 $segnalazione->id_notizia = $model->id_notizia;
                 $segnalazione->save();
-    
+
                 return $this->redirect([
                     'calculate',
                     'success' => true
