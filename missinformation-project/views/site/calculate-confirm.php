@@ -1,6 +1,7 @@
 <?php
 
 use yii\helpers\Html;
+use yii\bootstrap5\Carousel;
 use app\models\Notizia;
 
 $indice_attendibilita = $news->indice_attendibilita;
@@ -77,6 +78,11 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                 </div>
             </div>
             <div class="row">
+                <div class="col-lg-6">
+                    <h3>Relative Media</h3>
+                </div>
+            </div>
+            <div class="row">
                 <div class="col">
                     <?php
                     if ($indice_attendibilita < 50) {
@@ -102,6 +108,32 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
         </div>
     <?php endif; ?>
 </div>
+<div class="row">
+    <div class="col-md-4">
+        <div id="carouselExample" class="carousel slide" style="padding-top: 7px;">
+  <div class="carousel-inner">
+    <div class="carousel-item active">
+      <img src="https://www.animalidacompagnia.it/wp-content/uploads/2022/09/educazione-gattino-e1663332342582.jpg" class="d-block w-100" alt="">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.animalidacompagnia.it/wp-content/uploads/2022/09/educazione-gattino-e1663332342582.jpg" class="d-block w-100" alt="">
+    </div>
+    <div class="carousel-item">
+      <img src="https://www.animalidacompagnia.it/wp-content/uploads/2022/09/educazione-gattino-e1663332342582.jpg" class="d-block w-100" alt="">
+    </div>
+  </div>
+  <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+    </div>
+</div>
+
 <script>
     function getCookie(name) {
         let matches = document.cookie.match(new RegExp(
