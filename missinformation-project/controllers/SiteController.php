@@ -183,8 +183,8 @@ class SiteController extends Controller
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) {
             $query = Fonte::find()->where(['nome_fonte' => $modelSource->source])->one();
             $query2 = null;
-            
-            if($query != null) {
+
+            if ($query != null) {
                 $query->calcolaIndiceFonte();
                 $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
             }
@@ -251,4 +251,24 @@ class SiteController extends Controller
             'model' => $model,
         ]);
     }
+
+    public function actionImages()
+    {
+        return $this->render("images.php");
+    }
+
+    public function actionVideos()
+    {
+        return $this->render("videos.php");
+
+    }
+
+    public function actionAudio()
+    {
+        return $this->render("audios.php");
+
+    }
+
+
+
 }
