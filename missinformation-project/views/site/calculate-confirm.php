@@ -90,7 +90,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                         $query = $medias->retriveMedia($news->id);
                         foreach ($query as $q):
                             echo "<div class='carousel-item active container-img'>";
-                            if ($medias->isImage()):
+                            if ($medias->isImage($q->estensione)):
                                 echo "<img src='" . $q->percorso . "' class='d-block w-100' width='100'>";
                             endif;
                             echo "</div>";
