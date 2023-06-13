@@ -128,5 +128,6 @@ class Media extends \yii\db\ActiveRecord
             ->andWhere(["media_notizia.id_notizia" => $id])
             ->all();
 
+        return $query;
     }
 }

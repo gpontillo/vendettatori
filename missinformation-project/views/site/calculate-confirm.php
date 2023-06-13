@@ -1,8 +1,8 @@
 <?php
 
 use yii\helpers\Html;
-use yii\bootstrap5\Carousel;
 use app\models\Notizia;
+use app\models\Media;
 
 $indice_attendibilita = $news->indice_attendibilita;
 $soggetti = empty($news->coinvolgimento) ? [] : explode(Notizia::separatorSoggetti, $news->coinvolgimento);
@@ -83,7 +83,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                 </div>
             </div>
             <div class="row" style="padding-bottom: 10px;">
-                <h3>About Media</h3>
+                <h3>News Media</h3>
                 <div id="carouselExampleDark" class="carousel carousel-dark slide">
                     <div class="carousel-indicators">
                         <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="0" class="active"
