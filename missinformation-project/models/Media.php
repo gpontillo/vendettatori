@@ -122,6 +122,7 @@ class Media extends \yii\db\ActiveRecord
         //     ->all();
 
         $query = Media::find()
+            ->select("media.percorso")
             ->innerJoinWith("media_notizia", true)
             ->where("media_notizia.id_media = media.id")
             ->andWhere(["media_notizia.id_notizia" => $id])
