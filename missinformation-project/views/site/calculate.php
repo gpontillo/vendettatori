@@ -4,6 +4,7 @@ use yii\helpers\Html;
 use yii\bootstrap5\ActiveForm;
 use yii\model\Notizia;
 use yii\model\Fonte;
+
 ?>
 <div class="site-contact">
     <?php
@@ -13,7 +14,8 @@ use yii\model\Fonte;
                 Report sent with success!
             </div>
           ';
-    };
+    }
+    ;
     ?>
     <div class="row">
         <div class="col">
@@ -21,7 +23,8 @@ use yii\model\Fonte;
             <p>
                 With this form, you can search for an article and see if it's affidable or not.
                 Just insert the url or a media of the article to search it.
-                If we can't calculate affidability of the article, you will be asked to send us a report of the article and one of our moderator will analise it.
+                If we can't calculate affidability of the article, you will be asked to send us a report of the article
+                and one of our moderator will analise it.
             </p>
         </div>
     </div>
@@ -45,17 +48,6 @@ use yii\model\Fonte;
                 </div>
             </div>
             <?php ActiveForm::end(); ?>
-        </div>
-        <!-- to do -->
-        <div class="col">
-            <h4>Search by media</h4>
-            <div class="mb-3">
-                <label for="formFile" class="form-label">Default file input example</label>
-                <input class="form-control" type="file" id="formFile">
-            </div>
-            <div class="mb-3">
-                <button class="btn btn-primary" type="button">Submit</button>
-            </div>
         </div>
     </div>
 </div>
