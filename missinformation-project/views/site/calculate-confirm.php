@@ -11,17 +11,12 @@ $dataAccaduto = $news->data_accaduto;
 $fonte = $news->getFonte0()->one()->nome_fonte;
 ?>
 <script src="<?php echo Yii::$app->request->baseUrl; ?>/js/panel.js"></script>
-<div id="alertblock" class="alert alert-warning d-flex align-items-center" role="alert"
-    style="display: none !important;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-        class="bi bi-exclamation-triangle mr-5" viewBox="0 0 16 16" style="margin-left: 12px; margin-right: 12px;">
-        <path
-            d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
-        <path
-            d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
+<div id="alertblock" class="alert alert-warning d-flex align-items-center" role="alert" style="display: none !important;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor" class="bi bi-exclamation-triangle mr-5" viewBox="0 0 16 16" style="margin-left: 12px; margin-right: 12px;">
+        <path d="M7.938 2.016A.13.13 0 0 1 8.002 2a.13.13 0 0 1 .063.016.146.146 0 0 1 .054.057l6.857 11.667c.036.06.035.124.002.183a.163.163 0 0 1-.054.06.116.116 0 0 1-.066.017H1.146a.115.115 0 0 1-.066-.017.163.163 0 0 1-.054-.06.176.176 0 0 1 .002-.183L7.884 2.073a.147.147 0 0 1 .054-.057zm1.044-.45a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566z" />
+        <path d="M7.002 12a1 1 0 1 1 2 0 1 1 0 0 1-2 0zM7.1 5.995a.905.905 0 1 1 1.8 0l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995z" />
     </svg>
-    This news is from a blocked source. If you want to unblock it and see the news from this source <button
-        type="button" class="btn btn-link" onclick="unblockForNews(<?= $news->fonte ?>)">Click here</button>
+    This news is from a blocked source. If you want to unblock it and see the news from this source <button type="button" class="btn btn-link" onclick="unblockForNews(<?= $news->fonte ?>)">Click here</button>
 </div>
 <div id="newsdiv" class="site-index">
     <div class="jumbotron text-center bg-transparent">
@@ -39,7 +34,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
         ?>
     </div>
 
-    <?php if ($indice_attendibilita != -1): ?>
+    <?php if ($indice_attendibilita != -1) : ?>
         <div class="body-content">
             <div class="row">
                 <div class="col-lg-12">
@@ -49,9 +44,9 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
             <div class="row">
                 <div class="col-lg-6">
                     <h3>Subjects involved</h3>
-                    <?php if (empty($soggetti)): ?>
+                    <?php if (empty($soggetti)) : ?>
                         <?= '<p>None</p>' ?>
-                    <?php else: ?>
+                    <?php else : ?>
                         <ul>
                             <?php
                             foreach ($soggetti as $soggetto) {
@@ -82,37 +77,38 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                     </ul>
                 </div>
             </div>
-            <div class="row">
-                <div id="carouselExample" class="carousel slide carousel-img-news">
-                    <div class="carousel-inner">
-                        <?php
-                        $medias = new Media();
-                        $query = $medias->retriveMedia($news->id);
-                        foreach ($query as $q):
-                            echo "<div class='carousel-item active container-img'>";
-                            if ($medias->isImage()):
-                                echo "<img src='" . $q->percorso . "' class='d-block w-100' width='100'>";
-                            endif;
-                            echo "</div>";
-                        endforeach;
-                        ?>
-                        <!-- <div class="carousel-item active">
+            <div class="row mt-3 mb-3">
+                <div class="col">
+                    <h3>Media for this news</h3>
+                    <div id="carouselExample" class="carousel slide carousel-img-news" style="margin-bottom: 1rem !important; margin-top: 2rem !important;">
+                        <div class="carousel-inner">
+                            <?php
+                            $medias = new Media();
+                            $query = $medias->retriveMedia($news->id);
+                            foreach ($query as $q) :
+                                echo "<div class='carousel-item active container-img'>";
+                                if ($medias->isImage()) :
+                                    echo "<img src='" . $q->percorso . "' class='d-block w-100' width='100'>";
+                                endif;
+                                echo "</div>";
+                            endforeach;
+                            ?>
+                            <!-- <div class="carousel-item active">
                             <img src="https://www.zend.com/sites/default/files/image/2019-09/logo-yii-framework.jpg"
                                 class="d-block w-100" alt="...">
                         </div> -->
 
 
+                        </div>
+                        <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
+                            <span class="carousel-control-prev-icon" style="color: black;" aria-hidden="true"></span>
+                            <span class="visually-hidden">Previous</span>
+                        </button>
+                        <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="visually-hidden">Next</span>
+                        </button>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon" style="color: black;" aria-hidden="true"></span>
-                        <span class="visually-hidden">Previous</span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample"
-                        data-bs-slide="next">
-                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                        <span class="visually-hidden">Next</span>
-                    </button>
                 </div>
             </div>
             <div class="row">
