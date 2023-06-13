@@ -82,32 +82,17 @@ class Media extends \yii\db\ActiveRecord
         $this->indice_attendibilita = rand(0, 100);
     }
 
-    public static function isImage($estensione)
-    {
-        return in_array($estensione, Media::EXTENSIONS_IMAGE);
-    }
-
-    public function isImageMedia()
+    public function isImage()
     {
         return in_array($this->estensione, Media::EXTENSIONS_IMAGE);
     }
 
-    public static function isAudio($estensione)
-    {
-        return in_array($estensione, Media::EXTENSIONS_AUDIO);
-    }
-
-    public function isAudioMedia()
+    public function isAudio()
     {
         return in_array($this->estensione, Media::EXTENSIONS_AUDIO);
     }
 
-    public static function isVideo($estensione)
-    {
-        return in_array($estensione, Media::EXTENSIONS_VIDEO);
-    }
-
-    public function isVideoMedia()
+    public function isVideo()
     {
         return in_array($this->estensione, Media::EXTENSIONS_VIDEO);
     }
