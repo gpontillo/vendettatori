@@ -3,7 +3,6 @@
 namespace app\models;
 
 use Yii;
-use app\models\Media;
 use app\models\MediaNotizia;
 
 /**
@@ -117,11 +116,16 @@ class Media extends \yii\db\ActiveRecord
     {
         //inner join tra media_notizia e media con id notizia di media notizia = id
 
-        $query = Media::find()
-            ->innerJoinWith("media_notizia", "media_notizia.id_media = media.id")
-            ->andWhere(['media_notizia.id_media' => $id])
-            ->all();
+        // $query = Media::find()
+        //     ->innerJoinWith("media_notizia", "media_notizia.id_media = media.id")
+        //     ->andWhere(['media_notizia.id_media' => $id])
+        //     ->all();
 
+        $query = Media::find()
+            ->innerJoinWith("media_notizia", true)
+            ->where("media_notizia.id_media = media.id")
+            ->andWhere(["media_notizia.id_notizia" => $id])
+            ->all();
 
     }
 }
