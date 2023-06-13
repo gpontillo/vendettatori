@@ -145,3 +145,14 @@ a.desc:after {
 .mb-20 {
     margin-bottom: 20px !important;
 }
+
+.carousel-img-news img{
+    width:100%;
+    max-width:300px;
+}
+
+.carousel-img-news .container-img {
+    width: 100%;
+display: flex;
+justify-content: center;
+}
