@@ -76,12 +76,6 @@ class Media extends \yii\db\ActiveRecord
         return $this->hasMany(Notizia::class, ['id' => 'id_notizia'])->viaTable('{{%media_notizia}}', ['id_media' => 'id']);
     }
 
-    //MOCKED
-    public function calculateIndice()
-    {
-        $this->indice_attendibilita = rand(0, 100);
-    }
-
     public function isImage($estensione)
     {
         return in_array($estensione, Media::EXTENSIONS_IMAGE);
@@ -124,5 +118,21 @@ class Media extends \yii\db\ActiveRecord
             ->all();
 
         return $query;
+    }
+
+    public function calculateIndice()
+    {
+        $list_news = $this->retriveNews($this->id);
+
+        $index = 0;
+        $i = 0;
+        foreach($list_news as $news) {
+            $index += $news->indice_attendibilita;
+            $i++;
+        }
+
+        $index = $index / $i;
+        $this->indice_attendibilita = $index;
+        $this->save();
     }
 }

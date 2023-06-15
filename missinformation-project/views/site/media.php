@@ -6,6 +6,7 @@ use app\models\Media;
 
 //$model è il media
 //$news è la lista delle notizie
+$model->calculateIndice();
 $indice_attendibilita = $model->indice_attendibilita;
 ?>
 <div id="newsdiv" class="site-index">
