@@ -27,7 +27,7 @@ $indice_attendibilita = $model->indice_attendibilita;
     <div class="body-content">
         <div class="row">
             <div class="col-lg-12">
-                <h2>News data</h2>
+                <h2>Media data</h2>
             </div>
         </div>
         <div class="row">
