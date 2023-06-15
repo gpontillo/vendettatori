@@ -303,11 +303,11 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionMedia($id)
+    public function actionMedia($id, $typeOfMedia)
     {
         $media = Media::find()->where(['id' => $id])->one();
-        if($media != null)
+        if ($media != null)
             $notizie = $media->retriveNews($media->id);
-        return $this->render('media', ['model' => $media, 'news' => $notizie]);
+        return $this->render('media', ['model' => $media, 'news' => $notizie, 'tipo' => $typeOfMedia]);
     }
 }

@@ -1,8 +1,10 @@
 <?php
 
 use yii\helpers\Html;
+use yii\imagine\Image;
 use app\models\Notizia;
 use app\models\Media;
+
 
 //$model è il media
 //$news è la lista delle notizie
@@ -33,7 +35,22 @@ $indice_attendibilita = $model->indice_attendibilita;
             <div class="col-lg-6">
                 <h3>Metadata</h3>
                 <ul>
-                    <li>test</li>
+                    <?php
+                    echo "<li>Creation " . date('Y-m-d H:i:s', filectime(Yii::getAlias('@webroot') . $model->percorso)) . "</li>";
+                    echo "<li>File size: " . filesize(Yii::getAlias('@webroot') . $model->percorso) . " bytes" . "</li>";
+                    echo "<li>Last modify: " . date('Y-m-d H:i:s', filectime(Yii::getAlias('@webroot') . $model->percorso)) . "</li>";
+                    switch ($tipo):
+                        case 1:
+                            echo "<li>Type of media: Image</li>";
+                            break;
+                        case 2:
+                            echo "<li>Type of media: Image</li>";
+                            break;
+                        case 3:
+                            echo "<li>Type of media: Image</li>";
+                            break;
+                    endswitch;
+                    ?>
                 </ul>
             </div>
             <div class="col-lg-6">
@@ -44,7 +61,7 @@ $indice_attendibilita = $model->indice_attendibilita;
         <div class="row">
             <div class="col">
                 <h3>Media's news</h3>
-                
+
             </div>
         </div>
     </div>
