@@ -43,7 +43,8 @@ $indice_attendibilita = $model->indice_attendibilita;
         </div>
         <div class="row">
             <div class="col">
-                <p>lista notizie</p>
+                <h3>Media's news</h3>
+                
             </div>
         </div>
     </div>
