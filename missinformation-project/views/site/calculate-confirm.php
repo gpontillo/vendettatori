@@ -91,9 +91,8 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                         $type = null;
                         $query = $medias->retriveMedia($news->id);
                         foreach ($query as $q):
-                            echo '<div class="item-list"><div class="row">';
+                            echo '<div class="card item-list"><div class="card-body d-flex justify-content-center">';
                             if ($medias->isImage($q->estensione)):
-                                $type = 1;
                                 echo "<img src='" . $q->percorso . "' >";
                             elseif ($medias->isAudio($q->estensione)):
                                 $type = 2;
@@ -107,14 +106,11 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                                     <source src='" . $q->percorso . "' type='video/" . $q->estensione . "'>
                                     </video> ";
                             endif;
-                            echo Html::a('Check media', ['/site/media', 'id' => $q->id, 'typeOfMedia' => $type], ['class' => 'btn btn-outline-secondary']);
+                            echo '</div><div class="card-body d-flex justify-content-center align-items-end">';
+                            echo Html::a('Check media', ['/site/media', 'id' => $q->id], ['class' => 'card-link']);
                             echo '</div></div>';
                         endforeach;
                         ?>
-                        <!-- <div class="carousel-item active">
-                            <img src="https://www.zend.com/sites/default/files/image/2019-09/logo-yii-framework.jpg"
-                                class="d-block w-100" alt="...">
-                        </div> -->
                     </div>
                 </div>
                 <div class="row">
