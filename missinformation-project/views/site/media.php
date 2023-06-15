@@ -45,10 +45,13 @@ $indice_attendibilita = $model->indice_attendibilita;
                             echo "<li>Type of media: Image</li>";
                             break;
                         case 2:
-                            echo "<li>Type of media: Image</li>";
+                            echo "<li>Type of media: Audio</li>";
                             break;
                         case 3:
-                            echo "<li>Type of media: Image</li>";
+                            echo "<li>Type of media: Video</li>";
+                            break;
+                        default:
+                            echo "<li>Type of media: Unsupported</li>";
                             break;
                     endswitch;
                     ?>
@@ -58,18 +61,26 @@ $indice_attendibilita = $model->indice_attendibilita;
                 <h3>See media</h3>
                 <div class="d-flex justify-content-center">
                     <?php
-                    if ($model->isImage($model->estensione)):
-                        echo "<img src='" . $model->percorso . "' >";
-                    elseif ($model->isAudio($model->estensione)):
-                        echo " <audio controls>
+                    switch ($tipo):
+                        case 1:
+                            echo "<img src='" . $model->percorso . "' >";
+                            break;
+                        case 2:
+                            echo " <audio controls>
                                 <source src='" . $model->percorso . "' type='audio/" . $model->estensione . "'>
                               Your browser does not support the audio element.
                               </audio> ";
-                    elseif ($model->isVideo($model->estensione)):
-                        echo " <video controls>
+                            break;
+                        case 3:
+                            echo " <video controls>
                                     <source src='" . $model->percorso . "' type='video/" . $model->estensione . "'>
                                     </video> ";
-                    endif; ?>
+                            break;
+                        default:
+                            echo "<p>Unsupported media</p>";
+                            break;
+                    endswitch;
+                    ?>
                 </div>
             </div>
         </div>

@@ -146,37 +146,42 @@ class SiteController extends Controller
         $model = new CalculateForm();
 
         if ($model->load(Yii::$app->request->post()) && $model->validate()) {
-            $query = Notizia::find()->where(['link' => $model->url])->one();
-            $news1 = null;
-            $news2 = null;
-
-            if ($query == null) {
-                $news1 = Notizia::calculateNotizia($model->url);
-                if ($news1->indice_attendibilita === -1) {
-                    $this->redirect(['report-article', 'url' => $model->url, 'id' => $news1->id]);
-                }
-            } else
-                $news1 = $query;
-            if ($news1 != null) {
-                if ($news1->indice_attendibilita != -1) {
-                    $query2 = Notizia::find()->where(['>', 'indice_attendibilita', 50]);
-                    $query2->andWhere(['<>', 'id', $news1->id]);
-                    $arguments = [];
-                    foreach (explode(Notizia::separatorSoggetti, $news1->argomento) as $soggetto) {
-                        array_push($arguments, '%' . $soggetto . '%');
-                    }
-                    $query2->andWhere(['or like', 'argomento', $arguments, false]);
-                    $news2 = $query2->one();
-                }
-                return $this->render('calculate-confirm', [
-                    'news' => $news1,
-                    'news2' => $news2,
-                ]);
-            }
+            $this->redirect(['news', 'url' => $model->url]);
         } else
             return $this->render('calculate', [
                 'model' => $model,
             ]);
+    }
+
+    public function actionNews($url)
+    {
+        $query = Notizia::find()->where(['link' => $url])->one();
+        $news1 = null;
+        $news2 = null;
+
+        if ($query == null) {
+            $news1 = Notizia::calculateNotizia($url);
+            if ($news1->indice_attendibilita === -1) {
+                $this->redirect(['report-article', 'url' => $url, 'id' => $news1->id]);
+            }
+        } else
+            $news1 = $query;
+        if ($news1 != null) {
+            if ($news1->indice_attendibilita != -1) {
+                $query2 = Notizia::find()->where(['>', 'indice_attendibilita', 50]);
+                $query2->andWhere(['<>', 'id', $news1->id]);
+                $arguments = [];
+                foreach (explode(Notizia::separatorSoggetti, $news1->argomento) as $soggetto) {
+                    array_push($arguments, '%' . $soggetto . '%');
+                }
+                $query2->andWhere(['or like', 'argomento', $arguments, false]);
+                $news2 = $query2->one();
+            }
+            return $this->render('news', [
+                'news' => $news1,
+                'news2' => $news2,
+            ]);
+        }
     }
 
     public function actionCalculateSource()
@@ -184,22 +189,27 @@ class SiteController extends Controller
         $modelSource = new CalculateSourceForm();
 
         if ($modelSource->load(Yii::$app->request->post()) && $modelSource->validate()) {
-            $query = Fonte::find()->where(['nome_fonte' => $modelSource->source])->one();
-            $query2 = null;
-
-            if ($query != null) {
-                $query->calcolaIndiceFonte();
-                $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
-            }
-
-            return $this->render('calculate-confirm-source', [
-                'font' => $query,
-                'font2' => $query2
-            ]);
+            $this->redirect(['source', 'source' => $modelSource->source]);
         }
 
         return $this->render('calculate-source', [
             'model' => $modelSource,
+        ]);
+    }
+
+    public function actionSource($source)
+    {
+        $query = Fonte::find()->where(['nome_fonte' => $source])->one();
+        $query2 = null;
+
+        if ($query != null) {
+            $query->calcolaIndiceFonte();
+            $query2 = Fonte::find()->andFilterCompare('indice_fonte', '>50')->all();
+        }
+
+        return $this->render('source', [
+            'font' => $query,
+            'font2' => $query2
         ]);
     }
 
@@ -303,9 +313,16 @@ class SiteController extends Controller
      *
      * @return string
      */
-    public function actionMedia($id, $typeOfMedia)
+    public function actionMedia($id)
     {
         $media = Media::find()->where(['id' => $id])->one();
+        $typeOfMedia = 0;
+        if ($media->isImage($media->estensione))
+            $typeOfMedia = 1;
+        else if ($media->isAudio($media->estensione))
+            $typeOfMedia = 2;
+        else if ($media->isVideo($media->estensione))
+            $typeOfMedia = 3;
         if ($media != null)
             $notizie = $media->retriveNews($media->id);
         return $this->render('media', ['model' => $media, 'news' => $notizie, 'tipo' => $typeOfMedia]);
