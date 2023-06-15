@@ -37,8 +37,9 @@ $indice_attendibilita = $model->indice_attendibilita;
                     <li>test</li>
                 </ul>
             </div>
-            <div class="col-lg-6">
+            <div class="col-lg-6 media-show">
                 <h3>See media</h3>
+                <div class="d-flex justify-content-center">
                 <?php
                 if ($model->isImage($model->estensione)):
                     echo "<img src='" . $model->percorso . "' >";
@@ -48,10 +49,11 @@ $indice_attendibilita = $model->indice_attendibilita;
                               Your browser does not support the audio element.
                               </audio> ";
                 elseif ($model->isVideo($model->estensione)):
-                    echo " <video height='200' controls>
+                    echo " <video controls>
                                     <source src='" . $model->percorso . "' type='video/" . $model->estensione . "'>
                                     </video> ";
                 endif; ?>
+                </div>
             </div>
         </div>
         <div class="row">
