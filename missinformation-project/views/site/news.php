@@ -102,7 +102,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                               </audio> ";
                             elseif ($medias->isVideo($q->estensione)):
                                 $type = 3;
-                                echo " <video height='200' controls>
+                                echo " <video controls style='max-height: 200px'>
                                     <source src='" . $q->percorso . "' type='video/" . $q->estensione . "'>
                                     </video> ";
                             endif;
