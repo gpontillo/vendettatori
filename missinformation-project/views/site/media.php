@@ -38,43 +38,55 @@ $indice_attendibilita = $model->indice_attendibilita;
             </div>
             <div class="col-lg-6">
                 <h3>See media</h3>
-                <p>to do</p>
+                <?php
+                if ($model->isImage($model->estensione)):
+                    echo "<img src='" . $model->percorso . "' >";
+                elseif ($model->isAudio($model->estensione)):
+                    echo " <audio controls>
+                                <source src='" . $model->percorso . "' type='audio/" . $model->estensione . "'>
+                              Your browser does not support the audio element.
+                              </audio> ";
+                elseif ($model->isVideo($model->estensione)):
+                    echo " <video height='200' controls>
+                                    <source src='" . $model->percorso . "' type='video/" . $model->estensione . "'>
+                                    </video> ";
+                endif; ?>
             </div>
         </div>
         <div class="row">
             <div class="col">
                 <h3>Media's news</h3>
                 <div class="accordion" id="accordionExample">
-            <?php
-                $i = 1;
-                foreach($news as $articolo) {
-                    $fonte = $articolo->getFonte0()->one()->link_fonte;
-                    echo '
+                    <?php
+                    $i = 1;
+                    foreach ($news as $articolo) {
+                        $fonte = $articolo->getFonte0()->one()->link_fonte;
+                        echo '
                     <div class="accordion-item">
                         <h2 class="accordion-header">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse',$i,'" aria-expanded="true" aria-controls="collapse',$i,'">
-                                ',$articolo->descrizione_notizia," - Attendibility: ",$articolo->indice_attendibilita,'
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapse', $i, '" aria-expanded="true" aria-controls="collapse', $i, '">
+                                ', $articolo->descrizione_notizia, " - Attendibility: ", $articolo->indice_attendibilita, '
                             </button>
                         </h2>
-                        <div id="collapse',$i,'" class="accordion-collapse collapse">
+                        <div id="collapse', $i, '" class="accordion-collapse collapse">
                             <div class="accordion-body">
                                 <ul>
-                                    <li>Subjects involved: '.(empty($articolo->coinvolgimento)? 'None' : $articolo->coinvolgimento).'</li>
-                                    <li>Arguments: '.$articolo->argomento.'</li>
-                                    <li>Publishing date: '.$articolo->data_pubblicazione.'</li>
-                                    <li>Event date: '.$articolo->data_accaduto.'</li>
-                                    <li>Event place(s): '.$articolo->luogo.'</li>
-                                    <li>Source: '.$fonte.'</li>
-                                    <li>Link: ',Html::a($articolo->link, $articolo->link, ['target'=>'_blank']),'</li>
+                                    <li>Subjects involved: ' . (empty($articolo->coinvolgimento) ? 'None' : $articolo->coinvolgimento) . '</li>
+                                    <li>Arguments: ' . $articolo->argomento . '</li>
+                                    <li>Publishing date: ' . $articolo->data_pubblicazione . '</li>
+                                    <li>Event date: ' . $articolo->data_accaduto . '</li>
+                                    <li>Event place(s): ' . $articolo->luogo . '</li>
+                                    <li>Source: ' . $fonte . '</li>
+                                    <li>Link: ', Html::a($articolo->link, $articolo->link, ['target' => '_blank']), '</li>
                                 </ul>
                             </div>
                         </div>
                     </div>
                     ';
-                    $i++;
-                }
-            ?>
-        </div>
+                        $i++;
+                    }
+                    ?>
+                </div>
             </div>
         </div>
     </div>
