@@ -166,4 +166,6 @@ a.desc:after {
 
 .carousel-img-news .item-list {
     margin-right: 16px;
+    min-width: 250px;
+    min-height: 300px;
 }
