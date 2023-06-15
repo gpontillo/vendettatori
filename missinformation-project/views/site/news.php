@@ -107,7 +107,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                                     </video> ";
                             endif;
                             echo '</div><div class="card-body d-flex justify-content-center align-items-end">';
-                            echo Html::a('Check media', ['/site/media', 'id' => $q->id], ['class' => 'card-link']);
+                            echo Html::a('Check media', ['/site/media', 'id' => $q->id], ['class' => 'card-link', 'target' => '_blank']);
                             echo '</div></div>';
                         endforeach;
                         ?>

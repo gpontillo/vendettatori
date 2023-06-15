@@ -154,7 +154,7 @@ a.desc:after {
 .carousel-img-news {
     display: flex;
     direction: ltr;
-    overflow-x: scroll;
+    overflow-x: auto;
     align-items: center;
 }
 
@@ -166,7 +166,7 @@ a.desc:after {
 
 .carousel-img-news .item-list {
     margin-right: 16px;
-    min-width: 250px;
+    min-width: 400px;
     min-height: 300px;
 }
 
