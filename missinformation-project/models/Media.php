@@ -114,4 +114,15 @@ class Media extends \yii\db\ActiveRecord
 
         return $query;
     }
+
+    public function retriveNews($id)
+    {
+        $query = Notizia::find()
+            ->innerJoin("media_notizia", true)
+            ->where("notizia.id = media_notizia.id_notizia")
+            ->andWhere(["media_notizia.id_media" => $id])
+            ->all();
+
+        return $query;
+    }
 }

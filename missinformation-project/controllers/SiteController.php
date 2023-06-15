@@ -14,6 +14,7 @@ use app\models\ReportArticleForm;
 use app\models\CalculateSourceForm;
 use app\models\Notizia;
 use app\models\Fonte;
+use app\models\Media;
 use app\models\ReportMediaForm;
 use app\models\Segnalazioni;
 use app\models\SegnalazioniSearch;
@@ -297,5 +298,16 @@ class SiteController extends Controller
         ]);
     }
 
-
+    /**
+     * Displays media page.
+     *
+     * @return string
+     */
+    public function actionMedia($id)
+    {
+        $media = Media::find()->where(['id' => $id])->one();
+        if($media != null)
+            $notizie = $media->retriveNews($media->id);
+        return $this->render('media', ['$model' => $media, 'news' => $notizie]);
+    }
 }
