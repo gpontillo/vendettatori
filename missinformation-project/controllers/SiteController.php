@@ -308,6 +308,6 @@ class SiteController extends Controller
         $media = Media::find()->where(['id' => $id])->one();
         if($media != null)
             $notizie = $media->retriveNews($media->id);
-        return $this->render('media', ['$model' => $media, 'news' => $notizie]);
+        return $this->render('media', ['model' => $media, 'news' => $notizie]);
     }
 }

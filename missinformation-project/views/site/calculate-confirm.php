@@ -85,7 +85,7 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                         $medias = new Media();
                         $query = $medias->retriveMedia($news->id);
                         foreach ($query as $q) :
-                            echo '<div class="item-list">';
+                            echo '<div class="item-list"><div class="row">';
                             if ($medias->isImage($q->estensione)) :
                                 echo "<img src='" . $q->percorso . "' >";
                             elseif ($medias->isAudio($q->estensione)) :
@@ -98,7 +98,8 @@ $fonte = $news->getFonte0()->one()->nome_fonte;
                                     <source src='" . $q->percorso . "' type='video/" . $q->estensione . "'>
                                     </video> ";
                             endif;
-                            echo '</div>';
+                            echo Html::a('Check media', ['/site/media', 'id' => $q->id], ['class' => 'btn btn-outline-secondary']);
+                            echo '</div></div>';
                         endforeach;
                         ?>
                         <!-- <div class="carousel-item active">
