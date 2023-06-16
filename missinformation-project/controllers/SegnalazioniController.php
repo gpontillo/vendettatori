@@ -194,7 +194,7 @@ class SegnalazioniController extends Controller
             else
                 $id++;
             $media->id = $id;
-            $media->calculateIndice();
+            $media->indice_attendibilita = -1;
             $media->percorso = $model->media_path;
             $media->estensione = pathinfo($model->media_path, PATHINFO_EXTENSION);
 
