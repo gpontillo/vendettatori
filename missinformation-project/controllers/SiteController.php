@@ -252,7 +252,6 @@ class SiteController extends Controller
             $segnalazione->url = $model->url;
             $segnalazione->motivo = $model->motive;
             $segnalazione->valutazione = $model->review;
-            $segnalazione->media = null;
             $segnalazione->id_notizia = $model->id_notizia;
             $segnalazione->save();
 
